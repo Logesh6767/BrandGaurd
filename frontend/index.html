@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrandGuard — Intelligent Brand Governance Platform | Team Nexus</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+  <!-- =====================================================================
+       TOP GOVERNANCE HEADER & INSTANT JUDGE ROLE SWITCHER
+       ===================================================================== -->
+  <header class="top-header" role="banner">
+    <div class="brand-identity">
+      <div class="brand-logo" aria-hidden="true">BG</div>
+      <div class="brand-title-group">
+        <h1>
+          BrandGuard
+          <span class="badge-pill badge-kit" id="header-kit-badge">Brand Kit v3 Active</span>
+          <span class="badge-pill badge-ai-shield" title="Confidential [[...]] text is redacted locally before any AI call">
+            🛡️ AI &amp; Privacy Redaction Active
+          </span>
+        </h1>
+        <div class="brand-subtitle">
+          Pre-Publication Brand Governance &amp; Evidence-Grounded Review • Team Nexus (CodeNexus India 2026)
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Navigation Views -->
+    <nav class="main-nav" aria-label="Primary Workspace Views">
+      <button class="nav-tab active" data-view="review" onclick="BrandGuardApp.switchView('review')">
+        🔍 1. Review &amp; Approval Workspace
+      </button>
+      <button class="nav-tab" data-view="brandkit" onclick="BrandGuardApp.switchView('brandkit')">
+        📚 2. Brand Knowledge Base (v3)
+      </button>
+      <button class="nav-tab" data-view="insights" onclick="BrandGuardApp.switchView('insights')">
+        📊 3. Governance Insights &amp; Learning Loop
+      </button>
+      <button class="nav-tab" data-view="audit" onclick="BrandGuardApp.switchView('audit')">
+        🔒 4. Audit, AI Log &amp; Disclosures
+      </button>
+    </nav>
+
+    <!-- Instant Judge Role Switcher -->
+    <div class="role-switcher-bar" aria-label="Role Switcher">
+      <span class="role-label">Active Role:</span>
+      <div class="role-pills" id="role-pills-container">
+        <button class="role-btn active" data-role="creator" onclick="BrandGuardApp.switchRole('creator')" title="Submit & revise content, accept fixes, or dismiss with reason">
+          ✍️ Creator
+        </button>
+        <button class="role-btn" data-role="reviewer" onclick="BrandGuardApp.switchRole('reviewer')" title="Resolve escalated high-risk findings & approve/reject content">
+          ⚖️ Reviewer
+        </button>
+        <button class="role-btn" data-role="manager" onclick="BrandGuardApp.switchRole('manager')" title="Monitor governance insights, team compliance & approvals">
+          📈 Manager
+        </button>
+        <button class="role-btn" data-role="admin" onclick="BrandGuardApp.switchRole('admin')" title="Manage Brand Kit rules, facts, expiry dates & clarify ambiguous guidelines">
+          🛡️ Admin
+        </button>
+      </div>
+      <button class="header-util-btn" onclick="BrandGuardApp.openLoginModal()" title="Test formal PBKDF2 + HMAC Token Login">
+        🔑 Sign In
+      </button>
+      <button class="header-util-btn" onclick="BrandGuardApp.resetDemoData()" title="Reset database to fresh seeded demo state">
+        🔄 Reset Demo
+      </button>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       9-STEP END-TO-END WORKFLOW PROGRESS RIBBON (From Round 1 PDF Page 4)
+       ===================================================================== -->
+  <section class="workflow-ribbon" aria-label="9-Step Brand Governance Sequence">
+    <div class="workflow-steps-grid" id="workflow-ribbon-steps">
+      <!-- Dynamically updated by app.js based on active submission state -->
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       JUDGE QUICK-START BAR (1-Click Scenarios — No Login Required)
+       ===================================================================== -->
+  <section class="judge-quickstart-bar" aria-label="Quick Start Evaluation Scenarios">
+    <div class="judge-bar-left">
+      <span>⚡ <strong>Judge Quick-Test Scenarios:</strong> Pick a pre-seeded submission or load a test scenario in 1 click:</span>
+    </div>
+    <div class="preset-btn-group">
+      <button class="preset-btn" onclick="BrandGuardApp.selectSubmission(1)">
+        🎯 Sub #1: Round 1 PDF Flagship Example (BG-001)
+      </button>
+      <button class="preset-btn" onclick="BrandGuardApp.selectSubmission(2)">
+        ⚠️ Sub #2: Escalated High-Risk (Test Step 5 &amp; 7 Reviewer Gate)
+      </button>
+      <button class="preset-btn" onclick="BrandGuardApp.selectSubmission(3)">
+        ✅ Sub #3: Approved Record &amp; Word-Level Diffs (Step 8)
+      </button>
+      <button class="preset-btn" onclick="BrandGuardApp.openNewSubmissionModal()">
+        ➕ New Content / Load Preset
+      </button>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       MAIN APPLICATION CONTAINER
+       ===================================================================== -->
+  <main class="main-container">
+    <!-- VIEW 1: CONTENT REVIEW & APPROVAL WORKSPACE (Steps 2 to 8) -->
+    <section id="view-review" class="workspace-view">
+      <div class="workspace-grid">
+        <!-- LEFT COLUMN: Submissions Queue -->
+        <aside class="panel-card" aria-label="Submissions Queue">
+          <div class="panel-header">
+            <h2>📂 Submissions Queue</h2>
+            <button class="btn btn-primary btn-sm" onclick="BrandGuardApp.openNewSubmissionModal()">
+              + New Check
+            </button>
+          </div>
+          <div class="panel-body">
+            <div class="sub-list" id="submissions-list-container">
+              <!-- Populated by app.js -->
+            </div>
+          </div>
+        </aside>
+
+        <!-- MIDDLE COLUMN: Content Editor, Confidential Redaction & Visual/Accessibility Inspector -->
+        <section class="panel-card" aria-label="Content Editor and Asset Inspector">
+          <div class="panel-header">
+            <h2 id="editor-submission-title">📝 Content &amp; Asset Submission</h2>
+            <span id="editor-status-badge" class="status-badge status-IN_REVIEW">IN_REVIEW</span>
+          </div>
+          <div class="panel-body" id="editor-panel-body">
+            <!-- Populated by app.js -->
+          </div>
+        </section>
+
+        <!-- RIGHT COLUMN: Explainable Findings, Revisions Diff & Reviewer Approval Gate -->
+        <section class="panel-card" aria-label="Findings, Diffs, and Approval Controls">
+          <div class="sub-tabs" role="tablist">
+            <button class="sub-tab-btn active" id="tab-btn-findings" onclick="BrandGuardApp.switchRightTab('findings')">
+              🚩 Findings &amp; Cited Evidence <span id="findings-tab-count">(0)</span>
+            </button>
+            <button class="sub-tab-btn" id="tab-btn-diffs" onclick="BrandGuardApp.switchRightTab('diffs')">
+              🔀 Revision History &amp; Word Diffs <span id="diffs-tab-count">(v1)</span>
+            </button>
+            <button class="sub-tab-btn" id="tab-btn-record" onclick="BrandGuardApp.switchRightTab('record')">
+              📜 Publish Record &amp; AI Log
+            </button>
+          </div>
+
+          <div class="panel-body" id="right-panel-content" style="max-height: 670px; overflow-y: auto;">
+            <!-- Populated by app.js -->
+          </div>
+
+          <!-- Sticky Workflow Gate Footer (Steps 6 & 7) -->
+          <div class="workflow-gate-footer" id="workflow-gate-footer">
+            <!-- Populated by app.js -->
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- VIEW 2: BRAND KNOWLEDGE BASE (Step 1) -->
+    <section id="view-brandkit" class="workspace-view" style="display: none;">
+      <div id="brandkit-view-container"></div>
+    </section>
+
+    <!-- VIEW 3: GOVERNANCE INSIGHTS & LEARNING LOOP (Step 9) -->
+    <section id="view-insights" class="workspace-view" style="display: none;">
+      <div id="insights-view-container"></div>
+    </section>
+
+    <!-- VIEW 4: AUDIT LOG, AI DISCLOSURE & HACKATHON DISCLOSURES -->
+    <section id="view-audit" class="workspace-view" style="display: none;">
+      <div id="audit-view-container"></div>
+    </section>
+  </main>
+
+  <!-- =====================================================================
+       MODALS (New Submission / Preset Loader & Formal Login)
+       ===================================================================== -->
+  <div class="modal-backdrop" id="modal-new-submission" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width: 640px;">
+      <div class="panel-header">
+        <h2>➕ Create Content Submission / Load Test Scenario</h2>
+        <button class="btn btn-outline btn-sm" onclick="BrandGuardApp.closeModals()">✕</button>
+      </div>
+      <div class="panel-body" id="modal-new-sub-body"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="modal-login" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="panel-header">
+        <h2>🔑 Role Authentication (PBKDF2 + HMAC Signed Token)</h2>
+        <button class="btn btn-outline btn-sm" onclick="BrandGuardApp.closeModals()">✕</button>
+      </div>
+      <div class="panel-body" id="modal-login-body"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

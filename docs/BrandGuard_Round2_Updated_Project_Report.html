@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BrandGuard — Updated Project Report (Round 2 — CodeNexus India 2026)</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 16mm;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1E293B;
+      line-height: 1.55;
+      font-size: 10.5pt;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .eyebrow {
+      color: #1D4ED8;
+      font-size: 8.5pt;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    h1 {
+      font-size: 24pt;
+      color: #0F172A;
+      margin: 0 0 4px 0;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      font-size: 11.5pt;
+      color: #475569;
+      margin-bottom: 18px;
+    }
+    h2 {
+      font-size: 13pt;
+      color: #0F172A;
+      border-bottom: 1px solid #CBD5E1;
+      padding-bottom: 5px;
+      margin-top: 22px;
+      margin-bottom: 10px;
+    }
+    h3 {
+      font-size: 10.5pt;
+      color: #1D4ED8;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 16px 0;
+      font-size: 9.5pt;
+    }
+    th, td {
+      border: 1px solid #CBD5E1;
+      padding: 7px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background-color: #0F2942;
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+    tr:nth-child(even) td {
+      background-color: #F8FAFC;
+    }
+    .callout {
+      background: #F1F5F9;
+      border-left: 4px solid #0F62FE;
+      padding: 10px 14px;
+      margin: 12px 0;
+      font-size: 9.8pt;
+    }
+    ul {
+      margin: 6px 0 12px 20px;
+    }
+    li {
+      margin-bottom: 4px;
+    }
+    .badge-done {
+      display: inline-block;
+      background: #DCFCE7;
+      color: #166534;
+      font-weight: 700;
+      font-size: 8pt;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    @media print {
+      body { padding: 0; }
+      .no-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="no-print" style="background:#EFF6FF;border:1px solid #93C5FD;padding:10px 14px;border-radius:6px;margin-bottom:20px;font-size:10pt;">
+    💡 <strong>How to export as your Updated Project PDF:</strong> Press <code>Ctrl + P</code> (or <code>Cmd + P</code>) in your browser and select <strong>"Save as PDF"</strong>.
+  </div>
+
+  <div class="eyebrow">PROBLEM STATEMENT BY INKLOOM AI • UPDATED PROJECT REPORT (ROUND 2 — THE BUILD)</div>
+  <h1>BrandGuard</h1>
+  <div class="subtitle">An intelligent brand-governance platform that reviews content before it is published</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 32%;">Project Attribute</th>
+        <th>Submission Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Team name</strong></td>
+        <td>Nexus</td>
+      </tr>
+      <tr>
+        <td><strong>Team members</strong></td>
+        <td>Logeshwaran V, Muthukumar A, Mohammed Arshath, Poojitha V S</td>
+      </tr>
+      <tr>
+        <td><strong>Institution / organisation</strong></td>
+        <td>SRM Easwari Engineering College</td>
+      </tr>
+      <tr>
+        <td><strong>Team lead contact (email)</strong></td>
+        <td>logeshwaranvelmurugan@gmail.com</td>
+      </tr>
+      <tr>
+        <td><strong>Round &amp; submission date</strong></td>
+        <td>Round 2 — The Build | November 2026</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>1. Executive Summary &amp; Round 2 Build Status</h2>
+  <p>
+    Organisations publish through many hands at once—employees, external agencies, freelancers, and AI writing assistants—leading to outdated facts, unsupported promotional guarantees, misused terminology, off-palette visuals, and inaccessible design.
+  </p>
+  <p>
+    In <strong>Round 2 (The Build)</strong>, Team Nexus has transformed the Round 1 proposal into a fully functional, end-to-end web application built with <strong>Python 3.12, FastAPI, SQLite3, and an interactive Single-Page Application (SPA) frontend</strong>. Every step of our 9-step governance sequence works end-to-end without requiring a walkthrough or login barrier.
+  </p>
+
+  <div class="callout">
+    <strong>Zero-Friction Judge Evaluation:</strong> Opening the application link in an incognito window loads directly into an active workspace pre-seeded with the <strong>ABC SmartFlow Global Brand Kit v3 (14 verified rules)</strong>, a <strong>1-Click Role Switcher</strong> (Creator, Reviewer, Manager, Admin), and <strong>3 live submissions</strong> demonstrating active review (including the exact <code>BG-001</code> finding from Round 1), Step 5 Amber Escalation, and Step 8 Publish-Ready Compliance Records.
+  </div>
+
+  <h2>2. Completed Features in Round 2 (9-Step End-to-End Workflow)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 24%;">Workflow Step</th>
+        <th style="width: 14%;">Status</th>
+        <th>Implemented Capabilities in Working Product</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Set up brand kit (Admin)</strong></td>
+        <td><span class="badge-done">COMPLETED</span></td>
+        <td>Versioned Brand Knowledge Base (<code>v1</code>, <code>v2</code>, active <code>v3</code>) storing 14 rules across Approved Facts (<code>F-12</code>, <code>F-15</code>), Expired Facts (<code>F-09</code> with <code>2026-06-30</code> expiry), Claims Policy (<code>C-4</code>, <code>C-02</code>), Terminology (<code>T-01</code>, <code>T-02</code>, <code>T-04</code>), Tone (<code>G-01</code>, <code>G-02</code>), Visual Palette (<code>V-01</code>), and Accessibility (<code>A-01</code>–<code>A-03</code>). Admins can add/update rules live.</td>
+      </tr>
+      <tr>
+        <td><strong>2. Create content (Creator)</strong></td>
+        <td><span class="badge-done">COMPLETED</span></td>
+        <td>Multi-modal editor accepting copy, confidential <code>[[double-bracket]]</code> sections, HEX colors, client-side HTML5 Canvas image upload with dominant color extraction, image alt text, and CTA link text.</td>
+      </tr>
+      <tr>
+        <td><strong>3. Automated review (System)</strong></td>
+        <td><span class="badge-done">COMPLETED</span></td>
+        <td>Runs confidential redaction first, followed by the Deterministic Engine, AI Judgment Layer (with automatic offline heuristic fallback), and the <strong>Evidence Validator</strong> (which verifies rule ID, owner, version, and exact source quote substring match).</td>
+      </tr>
+      <tr>
+        <td><strong>4. Creator revision (Creator)</strong></td>
+        <td><span class="badge-done">COMPLETED</span></td>
+        <td>1-click <strong>Accept Suggested Fix</strong> (replaces text or visual metadata, saves a numbered revision <code>v2</code>, <code>v3</code>..., and computes a word-level HTML diff), Custom Fix, Manual Edit, Per-Finding Comments, and Dismiss with required written reason.</td>
+      </tr>
+      <tr>
+        <td><strong>5. Escalation safety net (System)</strong></td>
+        <td><span class="badge-done">COMPLETED</span></td>
+        <td>Dismissing a <code>HIGH</code>-severity finding (factual contradiction or legal claim) automatically transitions the finding to <strong><code>ESCALATED</code> (Amber State)</strong> instead of clearing it.</td>
+      </tr>
+      <tr>
+        <td><strong>6. Submit for approval (Creator)</strong></td>
+        <td><span class="badge-done">COMPLETED</span></td>
+        <td>Enforced gate: enabled only when <code>0 OPEN</code> findings remain and the latest content revision has been checked.</td>
+      </tr>
+      <tr>
+        <td><strong>7. Human approval (Reviewer)</strong></td>
+        <td><span class="badge-done">COMPLETED</span></td>
+        <td>Final approval is locked while any <code>ESCALATED</code> finding remains unresolved. The Reviewer must inspect the creator's dismissal reason and choose <strong>Reviewer Override &amp; Clear</strong> or <strong>Uphold Rule &amp; Require Fix</strong> before approving, requesting changes, or rejecting.</td>
+      </tr>
+      <tr>
+        <td><strong>8. Publish-ready record (System)</strong></td>
+        <td><span class="badge-done">COMPLETED</span></td>
+        <td>Immutable compliance certificate preserving numbered versions, word-level diffs, comments, reviewer sign-off, and the AI &amp; Privacy Disclosure Log.</td>
+      </tr>
+      <tr>
+        <td><strong>9. Governance insights (Manager / Admin)</strong></td>
+        <td><span class="badge-done">COMPLETED</span></td>
+        <td>Dashboard showing Evidence Grounding Rate (<code>100%</code>), recurring violations by rule, contributor team comparison, and the <strong>Ambiguous-Guideline Detector</strong> with 1-click rule clarification.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3. Technology Stack &amp; Implementation Architecture</h2>
+  <ul>
+    <li><strong>Backend API:</strong> Python 3.12 with <strong>FastAPI</strong>, <strong>Pydantic v2</strong>, and <strong>Uvicorn</strong>, organized into modular routers (<code>auth_routes.py</code>, <code>brand_kit.py</code>, <code>submissions.py</code>, <code>insights.py</code>) and engine modules (<code>redactor.py</code>, <code>deterministic.py</code>, <code>ai_judge.py</code>, <code>validator.py</code>, <code>diff_utils.py</code>, <code>orchestrator.py</code>).</li>
+    <li><strong>Database Layer:</strong> <strong>SQLite3</strong> with 9 normalized tables and transactional foreign-key enforcement.</li>
+    <li><strong>Deterministic Checks:</strong> Regular-expression rule tables, ISO date expiry checks, WCAG 2.1 relative luminance and contrast ratio formula, perceptual RGB color distance ($\Delta E$), and Flesch-Kincaid readability grading.</li>
+    <li><strong>AI &amp; Offline Fallback:</strong> Supports Anthropic Claude API (<code>claude-3-5-haiku-latest</code>) on redacted text with an automatic deterministic heuristic fallback for tone (<code>G-01</code>) and nuanced claims (<code>C-02</code>) when running offline or without API keys.</li>
+    <li><strong>Security &amp; Privacy:</strong> PBKDF2-HMAC-SHA256 password hashing (100,000 iterations), HMAC-SHA256 signed bearer tokens, server-side role verification, and local redaction of <code>[[confidential]]</code> spans.</li>
+  </ul>
+
+  <h2>4. Explanation of Changes Made from the Original Round 1 Proposal</h2>
+  <ol>
+    <li><strong>Added Instant Judge Role-Switcher &amp; Pre-Seeded Incognito Workspace:</strong> To ensure judges opening the link in an incognito browser are never blocked by a login screen or empty dashboard, we added a 1-click Role Switcher in the top bar (which dynamically issues real HMAC-signed tokens for Creator, Reviewer, Manager, and Admin) alongside formal PBKDF2 login.</li>
+    <li><strong>Added Client-Side HTML5 Canvas Dominant Color Extraction:</strong> For visual palette checking on uploaded images, we implemented an HTML5 Canvas pixel sampler in the frontend paired with RGB color-distance math in the backend so image palette compliance runs instantaneously without external vision API latency.</li>
+  </ol>
+
+  <h2>5. Three Major Improvements Committed for Round 3</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 28%;">Round 3 Improvement</th>
+        <th>Substantial Technical Scope &amp; Deliverable</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Multi-Format Document Ingestion &amp; Layout-Aware Parsing (<code>PDF</code> / <code>DOCX</code>)</strong></td>
+        <td>Build a direct file-upload pipeline using <code>pypdf</code> and <code>python-docx</code> that extracts structured headings, paragraphs, tables, embedded images, and hyperlinks from uploaded documents, attaching exact page and paragraph coordinates to every finding.</td>
+      </tr>
+      <tr>
+        <td><strong>2. Semantic Fact &amp; Claim Retrieval via Vector Embeddings</strong></td>
+        <td>Upgrade fact and claim verification from pattern matching to semantic vector similarity so paraphrased or indirectly worded claims (e.g., <em>"converses across two dozen languages"</em>) are matched against approved Brand Kit facts (<code>F-12: Supports 5 languages</code>) with similarity confidence scores.</td>
+      </tr>
+      <tr>
+        <td><strong>3. Multimodal Vision-Model Brand Asset &amp; Logo Verification</strong></td>
+        <td>Add multimodal vision analysis for uploaded marketing graphics to verify logo clear-space rules, detect stretched or unapproved logo variants, and measure text contrast directly over photographic backgrounds.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>6. Team Member Roles &amp; Contributions (Round 2 Build)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 22%;">Member</th>
+        <th style="width: 26%;">Role on Project</th>
+        <th>Part Built in Round 2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Logeshwaran V</strong></td>
+        <td>Team Lead &amp; Product Architect</td>
+        <td>Designed the Brand Knowledge Base v3 schema, evidence-grounding rules, 9-step governance workflow gates, and system integration.</td>
+      </tr>
+      <tr>
+        <td><strong>Muthukumar A</strong></td>
+        <td>Backend &amp; Hybrid AI Engineer</td>
+        <td>Built the FastAPI backend, SQLite database layer, deterministic rule engine, AI judgment fallback, Evidence Validator, and HMAC authentication.</td>
+      </tr>
+      <tr>
+        <td><strong>Mohammed Arshath</strong></td>
+        <td>Frontend &amp; UX Engineer</td>
+        <td>Built the interactive review workspace, annotated content editor, word-level diff viewer, WCAG contrast/palette inspector, and insights dashboard.</td>
+      </tr>
+      <tr>
+        <td><strong>Poojitha V S</strong></td>
+        <td>Quality, Data &amp; Security Lead</td>
+        <td>Built the confidential text redaction pipeline, AI disclosure &amp; audit logging, pre-seeded demo scenarios, and the automated pytest verification suite.</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
