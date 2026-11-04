@@ -2,7 +2,6 @@
    BrandGuard — Enterprise Brand Governance Studio (WCAG 2.1 AA Design System)
    ========================================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
   /* -----------------------------------------------------------------------
@@ -16,13 +15,13 @@
   --space-8: 32px;
 
   /* -----------------------------------------------------------------------
-     2. TYPOGRAPHY SCALE TOKENS (5 core sizes, minimum 12px)
+     2. TYPOGRAPHY SCALE TOKENS (5 core sizes, minimum 13px)
      ----------------------------------------------------------------------- */
-  --text-xs: 12px;     /* Captions, badges, table headers, helper text */
-  --text-sm: 13px;     /* Secondary UI, buttons, table cells, nav items */
-  --text-base: 14px;   /* Body copy, form inputs, descriptions */
-  --text-md: 16px;     /* Reading canvas, card titles, modal headings */
-  --text-lg: 20px;     /* Document & page titles (KPI numbers use 24px) */
+  --text-xs: 13px;     /* Captions, badges, table headers, helper text */
+  --text-sm: 14px;     /* Secondary UI, buttons, table cells, nav items */
+  --text-base: 16px;   /* Body copy, form inputs, descriptions */
+  --text-md: 18px;     /* Reading canvas, card titles, modal headings */
+  --text-lg: 22px;     /* Document & page titles (KPI numbers use 24px) */
 
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;

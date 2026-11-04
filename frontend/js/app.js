@@ -419,19 +419,10 @@ const BrandGuardApp = (() => {
     if (scoreValEl && scorePillEl) {
       scoreValEl.textContent = `${score}%`;
       scorePillEl.title = `Brand Compliance Score for Submission #${sub.id} (${sub.title}): ${score}%`;
-      if (score >= 90) {
-        scorePillEl.style.background = "#ECFDF5";
-        scorePillEl.style.borderColor = "#A7F3D0";
-        scorePillEl.style.color = "#065F46";
-      } else if (score >= 60) {
-        scorePillEl.style.background = "#FFFBEB";
-        scorePillEl.style.borderColor = "#FDE68A";
-        scorePillEl.style.color = "#92400E";
-      } else {
-        scorePillEl.style.background = "#FFF1F2";
-        scorePillEl.style.borderColor = "#FECDD3";
-        scorePillEl.style.color = "#9F1239";
-      }
+      // Score bands: 70-100 green, 60-69 yellow, 45-59 orange, below 45 red (colors live in theme.css)
+      const band = score >= 70 ? "green" : score >= 60 ? "yellow" : score >= 45 ? "orange" : "red";
+      scorePillEl.dataset.band = band;
+      scorePillEl.removeAttribute("style");
     }
 
     // Connected Single-Line 6-Step Workflow Stepper
@@ -604,7 +595,7 @@ const BrandGuardApp = (() => {
         <div class="doc-body-canvas">
           <div class="doc-canvas-bar">
             <span class="doc-canvas-hint">
-              Annotated Review Canvas · Click or press Enter on any underlined phrase to inspect its rule citation
+              Select a highlighted phrase to see its rule
             </span>
             <button class="btn btn-secondary btn-xs" onclick="BrandGuardApp.setDocMode('edit')">
               ${Icons.edit} <span>Edit Copy</span>
@@ -696,10 +687,6 @@ const BrandGuardApp = (() => {
             <span class="meta-chip">Team: <strong>${esc(sub.team)}</strong></span>
             <span class="meta-chip">Author: <strong>${esc(sub.author_name)}</strong></span>
             <span class="meta-chip">Revision: <code>v${sub.current_version}</code></span>
-            <span class="meta-chip">Knowledge Base: <code>Kit v${sub.kit_version}.0</code></span>
-            <span class="meta-chip meta-chip-verified">
-              ${Icons.shieldCheck} <span>Evidence Validator</span>
-            </span>
           </div>
         </div>
 

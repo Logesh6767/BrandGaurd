@@ -1,278 +1,545 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrandGuard — Enterprise Brand Governance Studio</title>
-  <link rel="stylesheet" href="/static/css/styles.css" />
-</head>
-<body>
-  <div class="app-shell">
-    <!-- ===================================================================
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BrandGuard — Enterprise Brand Governance Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <link rel="stylesheet" href="/static/css/theme.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- ===================================================================
          LEFT ENTERPRISE SIDEBAR (Navigation, Submissions Queue & Role Switcher)
          =================================================================== -->
-    <aside class="app-sidebar" aria-label="Workspace Navigation">
-      <div class="sb-header">
-        <div class="sb-brand">
-          <div class="sb-logo-mark" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              <path d="m9 12 2 2 4-4"/>
+      <aside
+        class="app-sidebar"
+        id="app-sidebar"
+        aria-label="Workspace Navigation"
+      >
+        <div class="sb-header">
+          <div class="sb-brand">
+            <div class="sb-logo-mark" aria-hidden="true">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#FFFFFF"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <path d="m9 12 2 2 4-4" />
+              </svg>
+            </div>
+            <div class="sb-brand-text">
+              <h1>BrandGuard</h1>
+              <div class="sb-brand-sub">
+                <span class="status-dot-live" aria-hidden="true"></span>
+                <span>ABC SmartFlow · Kit v3.0</span>
+              </div>
+            </div>
+          </div>
+          <button
+            class="sb-collapse-btn"
+            id="sb-collapse-btn"
+            type="button"
+            aria-label="Collapse sidebar"
+            aria-expanded="true"
+            aria-controls="app-sidebar"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <polyline points="15 18 9 12 15 6" />
             </svg>
-          </div>
-          <div class="sb-brand-text">
-            <h1>BrandGuard</h1>
-            <div class="sb-brand-sub">
-              <span class="status-dot-live" aria-hidden="true"></span>
-              <span>ABC SmartFlow · Kit v3.0</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Scrollable Navigation & Submissions List -->
-      <div class="sb-scroll">
-        <!-- Primary Views -->
-        <nav aria-label="Primary Views">
-          <div class="sb-section-title">
-            <span>Workspace</span>
-          </div>
-          <div class="sb-nav-list">
-            <button class="sb-nav-item active" data-view="review" onclick="BrandGuardApp.switchView('review')">
-              <span class="sb-nav-item-left">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                  <polyline points="14 2 14 8 20 8"/>
-                  <line x1="16" y1="13" x2="8" y2="13"/>
-                  <line x1="16" y1="17" x2="8" y2="17"/>
-                </svg>
-                <span>Review Studio</span>
-              </span>
-              <span class="sb-badge" id="nav-badge-review">Live</span>
-            </button>
-
-            <button class="sb-nav-item" data-view="brandkit" onclick="BrandGuardApp.switchView('brandkit')">
-              <span class="sb-nav-item-left">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                </svg>
-                <span>Brand Knowledge Base</span>
-              </span>
-              <span class="sb-badge emerald" id="nav-badge-rules">v3.0</span>
-            </button>
-
-            <button class="sb-nav-item" data-view="insights" onclick="BrandGuardApp.switchView('insights')">
-              <span class="sb-nav-item-left">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <line x1="18" y1="20" x2="18" y2="10"/>
-                  <line x1="12" y1="20" x2="12" y2="4"/>
-                  <line x1="6" y1="20" x2="6" y2="14"/>
-                </svg>
-                <span>Governance Insights</span>
-              </span>
-              <span class="sb-badge amber" id="nav-badge-insights">Loop</span>
-            </button>
-
-            <button class="sb-nav-item" data-view="audit" onclick="BrandGuardApp.switchView('audit')">
-              <span class="sb-nav-item-left">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg>
-                <span>Audit &amp; AI Trust Log</span>
-              </span>
-              <span class="sb-badge">SHA</span>
-            </button>
-          </div>
-        </nav>
-
-        <!-- Content Submissions Queue -->
-        <div aria-label="Submissions Queue">
-          <div class="sb-section-title">
-            <span>Submissions Queue</span>
-            <button class="sb-util-btn sb-new-check-link" onclick="BrandGuardApp.openNewSubmissionModal()">
-              + New Check
-            </button>
-          </div>
-          <div class="sb-nav-list" id="submissions-list-container">
-            <!-- Populated by app.js -->
-          </div>
-        </div>
-      </div>
-
-      <!-- Bottom Persona & Separated Demo Controls -->
-      <div class="sb-footer">
-        <div class="role-switcher-card">
-          <!-- Active User Profile Section -->
-          <div class="persona-row" aria-label="Active User Profile">
-            <div class="persona-avatar" id="active-persona-avatar">MA</div>
-            <div class="persona-info">
-              <div class="persona-name" id="active-persona-name">Mohammed Arshath</div>
-              <div class="persona-role-tag" id="active-persona-role">Creator · Product Marketing</div>
-            </div>
-          </div>
-
-          <!-- Visually Separated Demo Controls Group -->
-          <div class="demo-controls-group" role="group" aria-label="Demo Controls and Role Switcher">
-            <div class="demo-controls-header">
-              <span class="demo-controls-label">Demo Controls · Role</span>
-              <span class="sb-badge sb-badge-subtle" title="PBKDF2 + HMAC-SHA256 Session Active">HMAC Active</span>
-            </div>
-
-            <div class="role-grid-2x2" id="role-pills-container">
-              <button class="role-pill-btn active" data-role="creator" onclick="BrandGuardApp.switchRole('creator')">
-                Creator
-              </button>
-              <button class="role-pill-btn" data-role="reviewer" onclick="BrandGuardApp.switchRole('reviewer')">
-                Reviewer
-              </button>
-              <button class="role-pill-btn" data-role="manager" onclick="BrandGuardApp.switchRole('manager')">
-                Manager
-              </button>
-              <button class="role-pill-btn" data-role="admin" onclick="BrandGuardApp.switchRole('admin')">
-                Admin
-              </button>
-            </div>
-
-            <div class="sb-util-links">
-              <button class="sb-util-btn" onclick="BrandGuardApp.openLoginModal()">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg>
-                <span>Auth Token</span>
-              </button>
-              <button class="sb-util-btn" onclick="BrandGuardApp.resetDemoData()">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <polyline points="1 4 1 10 7 10"/>
-                  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
-                </svg>
-                <span>Reset Seed</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </aside>
-
-    <!-- ===================================================================
-         MAIN WORKSPACE AREA
-         =================================================================== -->
-    <div class="app-main">
-      <!-- Top Workspace Bar -->
-      <header class="workspace-topbar">
-        <div class="topbar-left">
-          <span class="breadcrumb-root" id="topbar-view-section">Review Studio</span>
-          <span class="breadcrumb-sep" aria-hidden="true">/</span>
-          <span class="breadcrumb-current" id="topbar-doc-title" title="Loading submission...">Loading submission...</span>
-        </div>
-
-        <!-- Center Workflow Stepper & Submission Context Indicator -->
-        <div class="topbar-center">
-          <span class="topbar-context-chip" id="topbar-sub-context" title="Submission currently tracked by the workflow stepper and Brand Score">Sub #1</span>
-          <div class="workflow-stepper" id="workflow-ribbon-steps" aria-label="Governance Workflow Stage">
-            <!-- Dynamically rendered by app.js -->
-          </div>
-        </div>
-
-        <!-- Visually Separated Global Actions & Compliance Score -->
-        <div class="topbar-right">
-          <div class="compliance-score-pill" id="topbar-compliance-pill" title="Real-Time Brand Compliance Score for Active Submission">
-            <span class="score-label">Brand Score</span>
-            <span class="score-badge-num" id="topbar-score-val">--%</span>
-          </div>
-          <button class="btn btn-primary btn-xs" id="topbar-new-check-btn" onclick="BrandGuardApp.openNewSubmissionModal()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-              <line x1="12" y1="5" x2="12" y2="19"/>
-              <line x1="5" y1="12" x2="19" y2="12"/>
-            </svg>
-            <span>New Content Check</span>
           </button>
         </div>
-      </header>
 
-      <!-- VIEW 1: REVIEW STUDIO (Split-Pane Document Canvas + Evidence Inspector) -->
-      <main id="view-review" class="studio-split">
-        <!-- Left/Center Document & Visual Asset Studio -->
-        <section class="document-pane" id="editor-panel-body" aria-label="Content and Asset Studio">
-          <!-- Populated by app.js -->
-        </section>
+        <!-- Scrollable Navigation & Submissions List -->
+        <div class="sb-scroll">
+          <!-- Primary Views -->
+          <nav aria-label="Primary Views">
+            <div class="sb-section-title">
+              <span>Workspace</span>
+            </div>
+            <div class="sb-nav-list">
+              <button
+                class="sb-nav-item active"
+                data-view="review"
+                onclick="BrandGuardApp.switchView('review')"
+              >
+                <span class="sb-nav-item-left">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                    />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                  </svg>
+                  <span>Review Studio</span>
+                </span>
+              </button>
 
-        <!-- Right Evidence & Governance Inspector -->
-        <aside class="inspector-pane" aria-label="Evidence Inspector and Workflow Gate">
-          <div class="inspector-header">
-            <div class="inspector-tabs" role="tablist" aria-label="Inspector Views">
-              <button class="insp-tab active" id="tab-btn-findings" role="tab" aria-selected="true" onclick="BrandGuardApp.switchRightTab('findings')">
-                <span>Findings</span>
-                <span class="insp-tab-badge" id="findings-tab-count">(0)</span>
+              <button
+                class="sb-nav-item"
+                data-view="brandkit"
+                onclick="BrandGuardApp.switchView('brandkit')"
+              >
+                <span class="sb-nav-item-left">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                    <path
+                      d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+                    />
+                  </svg>
+                  <span>Brand Knowledge Base</span>
+                </span>
               </button>
-              <button class="insp-tab" id="tab-btn-diffs" role="tab" aria-selected="false" onclick="BrandGuardApp.switchRightTab('diffs')">
-                <span>Revision Diffs</span>
-                <span class="insp-tab-badge" id="diffs-tab-count">(v1)</span>
+
+              <button
+                class="sb-nav-item"
+                data-view="insights"
+                onclick="BrandGuardApp.switchView('insights')"
+              >
+                <span class="sb-nav-item-left">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <line x1="18" y1="20" x2="18" y2="10" />
+                    <line x1="12" y1="20" x2="12" y2="4" />
+                    <line x1="6" y1="20" x2="6" y2="14" />
+                  </svg>
+                  <span>Governance Insights</span>
+                </span>
               </button>
-              <button class="insp-tab" id="tab-btn-record" role="tab" aria-selected="false" onclick="BrandGuardApp.switchRightTab('record')">
-                <span>Certificate</span>
+
+              <button
+                class="sb-nav-item"
+                data-view="audit"
+                onclick="BrandGuardApp.switchView('audit')"
+              >
+                <span class="sb-nav-item-left">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                  <span>Audit &amp; AI Trust Log</span>
+                </span>
               </button>
             </div>
-            <div id="inspector-subtoolbar"></div>
+          </nav>
+
+          <!-- Content Submissions Queue -->
+          <div aria-label="Submissions Queue">
+            <div class="sb-section-title">
+              <span>Submissions Queue</span>
+              <button
+                class="sb-util-btn sb-new-check-link"
+                onclick="BrandGuardApp.openNewSubmissionModal()"
+              >
+                + New Check
+              </button>
+            </div>
+            <div class="sb-nav-list" id="submissions-list-container">
+              <!-- Populated by app.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Persona & Separated Demo Controls -->
+        <div class="sb-footer">
+          <div class="role-switcher-card">
+            <!-- Active User Profile Section -->
+            <div class="persona-row" aria-label="Active User Profile">
+              <div class="persona-avatar" id="active-persona-avatar">MA</div>
+              <div class="persona-info">
+                <div class="persona-name" id="active-persona-name">
+                  Mohammed Arshath
+                </div>
+                <div class="persona-role-tag" id="active-persona-role">
+                  Creator · Product Marketing
+                </div>
+              </div>
+            </div>
+
+            <!-- Visually Separated Demo Controls Group -->
+            <div
+              class="demo-controls-group"
+              role="group"
+              aria-label="Demo Controls and Role Switcher"
+            >
+              <div class="demo-controls-header">
+                <span class="demo-controls-label">View as</span>
+              </div>
+
+              <div class="role-grid-2x2" id="role-pills-container">
+                <button
+                  class="role-pill-btn active"
+                  data-role="creator"
+                  onclick="BrandGuardApp.switchRole('creator')"
+                >
+                  Creator
+                </button>
+                <button
+                  class="role-pill-btn"
+                  data-role="reviewer"
+                  onclick="BrandGuardApp.switchRole('reviewer')"
+                >
+                  Reviewer
+                </button>
+                <button
+                  class="role-pill-btn"
+                  data-role="manager"
+                  onclick="BrandGuardApp.switchRole('manager')"
+                >
+                  Manager
+                </button>
+                <button
+                  class="role-pill-btn"
+                  data-role="admin"
+                  onclick="BrandGuardApp.switchRole('admin')"
+                >
+                  Admin
+                </button>
+              </div>
+
+              <div class="sb-util-links">
+                <button
+                  class="sb-util-btn"
+                  onclick="BrandGuardApp.openLoginModal()"
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                  <span>Auth Token</span>
+                </button>
+                <button
+                  class="sb-util-btn"
+                  onclick="BrandGuardApp.resetDemoData()"
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <polyline points="1 4 1 10 7 10" />
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                  </svg>
+                  <span>Reset Seed</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ===================================================================
+         MAIN WORKSPACE AREA
+         =================================================================== -->
+      <div class="app-main">
+        <!-- Top Workspace Bar -->
+        <header class="workspace-topbar">
+          <div class="topbar-left">
+            <span class="breadcrumb-root" id="topbar-view-section"
+              >Review Studio</span
+            >
+            <span class="breadcrumb-sep" aria-hidden="true">/</span>
+            <span
+              class="breadcrumb-current"
+              id="topbar-doc-title"
+              title="Loading submission..."
+              >Loading submission...</span
+            >
           </div>
 
-          <!-- Scrollable Findings / Diffs / Record Feed -->
-          <div class="inspector-feed" id="right-panel-content">
+          <!-- Center Workflow Stepper & Submission Context Indicator -->
+          <div class="topbar-center">
+            <div
+              class="workflow-stepper"
+              id="workflow-ribbon-steps"
+              aria-label="Governance Workflow Stage"
+            >
+              <!-- Dynamically rendered by app.js -->
+            </div>
+          </div>
+
+          <!-- Visually Separated Global Actions & Compliance Score -->
+          <div class="topbar-right">
+            <div
+              class="compliance-score-pill"
+              id="topbar-compliance-pill"
+              title="Real-Time Brand Compliance Score for Active Submission"
+            >
+              <span class="score-label">Brand Score</span>
+              <span class="score-badge-num" id="topbar-score-val">--%</span>
+            </div>
+            <button
+              class="btn btn-primary btn-xs"
+              id="topbar-new-check-btn"
+              onclick="BrandGuardApp.openNewSubmissionModal()"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                aria-hidden="true"
+              >
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              <span>New Content Check</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- VIEW 1: REVIEW STUDIO (Split-Pane Document Canvas + Evidence Inspector) -->
+        <main id="view-review" class="studio-split">
+          <!-- Left/Center Document & Visual Asset Studio -->
+          <section
+            class="document-pane"
+            id="editor-panel-body"
+            aria-label="Content and Asset Studio"
+          >
             <!-- Populated by app.js -->
-          </div>
+          </section>
 
-          <!-- Sticky Bottom Approval Gate Footer -->
-          <div class="inspector-footer" id="workflow-gate-footer">
-            <!-- Populated by app.js -->
-          </div>
-        </aside>
-      </main>
+          <!-- Right Evidence & Governance Inspector -->
+          <aside
+            class="inspector-pane"
+            aria-label="Evidence Inspector and Workflow Gate"
+          >
+            <div class="inspector-header">
+              <div
+                class="inspector-tabs"
+                role="tablist"
+                aria-label="Inspector Views"
+              >
+                <button
+                  class="insp-tab active"
+                  id="tab-btn-findings"
+                  role="tab"
+                  aria-selected="true"
+                  onclick="BrandGuardApp.switchRightTab('findings')"
+                >
+                  <span>Findings</span>
+                  <span class="insp-tab-badge" id="findings-tab-count"
+                    >(0)</span
+                  >
+                </button>
+                <button
+                  class="insp-tab"
+                  id="tab-btn-diffs"
+                  role="tab"
+                  aria-selected="false"
+                  onclick="BrandGuardApp.switchRightTab('diffs')"
+                >
+                  <span>Revision Diffs</span>
+                  <span class="insp-tab-badge" id="diffs-tab-count">(v1)</span>
+                </button>
+                <button
+                  class="insp-tab"
+                  id="tab-btn-record"
+                  role="tab"
+                  aria-selected="false"
+                  onclick="BrandGuardApp.switchRightTab('record')"
+                >
+                  <span>Certificate</span>
+                </button>
+              </div>
+              <div id="inspector-subtoolbar"></div>
+            </div>
 
-      <!-- VIEW 2: BRAND KNOWLEDGE BASE (Step 1) -->
-      <section id="view-brandkit" class="page-scroll-view" style="display: none;" aria-label="Brand Knowledge Base">
-        <div class="page-container" id="brandkit-view-container"></div>
-      </section>
+            <!-- Scrollable Findings / Diffs / Record Feed -->
+            <div class="inspector-feed" id="right-panel-content">
+              <!-- Populated by app.js -->
+            </div>
 
-      <!-- VIEW 3: GOVERNANCE INSIGHTS & LEARNING LOOP (Step 9) -->
-      <section id="view-insights" class="page-scroll-view" style="display: none;" aria-label="Governance Insights">
-        <div class="page-container" id="insights-view-container"></div>
-      </section>
+            <!-- Sticky Bottom Approval Gate Footer -->
+            <div class="inspector-footer" id="workflow-gate-footer">
+              <!-- Populated by app.js -->
+            </div>
+          </aside>
+        </main>
 
-      <!-- VIEW 4: AUDIT TRAIL & AI DISCLOSURE LOG -->
-      <section id="view-audit" class="page-scroll-view" style="display: none;" aria-label="Audit and AI Trust Log">
-        <div class="page-container" id="audit-view-container"></div>
-      </section>
+        <!-- VIEW 2: BRAND KNOWLEDGE BASE (Step 1) -->
+        <section
+          id="view-brandkit"
+          class="page-scroll-view"
+          style="display: none"
+          aria-label="Brand Knowledge Base"
+        >
+          <div class="page-container" id="brandkit-view-container"></div>
+        </section>
+
+        <!-- VIEW 3: GOVERNANCE INSIGHTS & LEARNING LOOP (Step 9) -->
+        <section
+          id="view-insights"
+          class="page-scroll-view"
+          style="display: none"
+          aria-label="Governance Insights"
+        >
+          <div class="page-container" id="insights-view-container"></div>
+        </section>
+
+        <!-- VIEW 4: AUDIT TRAIL & AI DISCLOSURE LOG -->
+        <section
+          id="view-audit"
+          class="page-scroll-view"
+          style="display: none"
+          aria-label="Audit and AI Trust Log"
+        >
+          <div class="page-container" id="audit-view-container"></div>
+        </section>
+      </div>
     </div>
-  </div>
 
-  <!-- ===================================================================
+    <!-- ===================================================================
        MODALS (New Submission / Scenario Loader & Formal Login)
        =================================================================== -->
-  <div class="modal-backdrop" id="modal-new-submission" role="dialog" aria-modal="true" aria-labelledby="modal-new-sub-heading">
-    <div class="modal-window modal-window-lg">
-      <div class="modal-header">
-        <h3 id="modal-new-sub-heading">New Content Check / Load Evaluation Scenario</h3>
-        <button class="btn btn-ghost btn-xs" aria-label="Close modal" onclick="BrandGuardApp.closeModals()">✕</button>
+    <div
+      class="modal-backdrop"
+      id="modal-new-submission"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-new-sub-heading"
+    >
+      <div class="modal-window modal-window-lg">
+        <div class="modal-header">
+          <h3 id="modal-new-sub-heading">
+            New Content Check / Load Evaluation Scenario
+          </h3>
+          <button
+            class="btn btn-ghost btn-xs"
+            aria-label="Close modal"
+            onclick="BrandGuardApp.closeModals()"
+          >
+            ✕
+          </button>
+        </div>
+        <div class="modal-body" id="modal-new-sub-body"></div>
       </div>
-      <div class="modal-body" id="modal-new-sub-body"></div>
     </div>
-  </div>
 
-  <div class="modal-backdrop" id="modal-login" role="dialog" aria-modal="true" aria-labelledby="modal-login-heading">
-    <div class="modal-window" style="max-width: 460px;">
-      <div class="modal-header">
-        <h3 id="modal-login-heading">PBKDF2 + HMAC Signed Token Authentication</h3>
-        <button class="btn btn-ghost btn-xs" aria-label="Close modal" onclick="BrandGuardApp.closeModals()">✕</button>
+    <div
+      class="modal-backdrop"
+      id="modal-login"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-login-heading"
+    >
+      <div class="modal-window" style="max-width: 460px">
+        <div class="modal-header">
+          <h3 id="modal-login-heading">
+            PBKDF2 + HMAC Signed Token Authentication
+          </h3>
+          <button
+            class="btn btn-ghost btn-xs"
+            aria-label="Close modal"
+            onclick="BrandGuardApp.closeModals()"
+          >
+            ✕
+          </button>
+        </div>
+        <div class="modal-body" id="modal-login-body"></div>
       </div>
-      <div class="modal-body" id="modal-login-body"></div>
     </div>
-  </div>
 
-  <!-- Toast Stack -->
-  <div class="toast-stack" id="toast-container" aria-live="polite"></div>
+    <!-- Toast Stack -->
+    <div class="toast-stack" id="toast-container" aria-live="polite"></div>
 
-  <script src="/static/js/app.js"></script>
-</body>
+    <script>
+      (function () {
+        var shell = document.querySelector(".app-shell");
+        var btn = document.getElementById("sb-collapse-btn");
+        document.querySelectorAll(".sb-nav-item").forEach(function (el) {
+          el.title = el.textContent
+            .replace(/\s+/g, " ")
+            .trim()
+            .replace(/\s(Live|v3\.0|Loop|SHA)$/, "");
+        });
+        function apply(collapsed) {
+          shell.classList.toggle("sb-collapsed", collapsed);
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute(
+            "aria-label",
+            collapsed ? "Expand sidebar" : "Collapse sidebar",
+          );
+          try {
+            localStorage.setItem("bg-sidebar-collapsed", collapsed ? "1" : "0");
+          } catch (e) {}
+        }
+        var saved = false;
+        try {
+          saved = localStorage.getItem("bg-sidebar-collapsed") === "1";
+        } catch (e) {}
+        apply(saved);
+        btn.addEventListener("click", function () {
+          apply(!shell.classList.contains("sb-collapsed"));
+        });
+      })();
+    </script>
+    <script src="/static/js/app.js"></script>
+  </body>
 </html>
