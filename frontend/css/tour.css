@@ -1,0 +1,1038 @@
+/* =========================================================================
+   BrandGuard — Interactive Guided Tour & Tutorial System (WCAG 2.1 AA)
+   Self-contained, read-only module styles.
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   1. OVERLAY, SPOTLIGHT & BACKDROP
+   ------------------------------------------------------------------------- */
+.bg-tour-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: none;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bg-tour-overlay.active {
+  display: block;
+  opacity: 1;
+}
+
+/* Transparent click blocker that prevents accidental clicks on underlying app during tour */
+.bg-tour-blocker {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: none;
+  background: transparent;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.bg-tour-blocker.active {
+  display: block;
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.bg-tour-blocker.active.no-target {
+  background: rgba(15, 23, 42, 0.62);
+}
+
+/* Cutout spotlight highlight box positioned over target element */
+.bg-tour-spotlight {
+  position: fixed;
+  z-index: 9999;
+  border-radius: 8px;
+  background: transparent;
+  pointer-events: none;
+  transition: top 360ms cubic-bezier(0.22, 1, 0.36, 1),
+              left 360ms cubic-bezier(0.22, 1, 0.36, 1),
+              width 360ms cubic-bezier(0.22, 1, 0.36, 1),
+              height 360ms cubic-bezier(0.22, 1, 0.36, 1),
+              outline-color 200ms ease,
+              box-shadow 240ms ease;
+  outline: 2.5px solid var(--primary, #1D4ED8);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.62), 0 0 0 6px rgba(29, 78, 216, 0.22), 0 0 20px rgba(29, 78, 216, 0.45);
+}
+
+/* Animated beacon ring when spotlighting the trigger tab/module before switching */
+.bg-tour-spotlight.wayfinding-pulse {
+  outline: 3px solid #3B82F6;
+  outline-offset: 3px;
+  animation: bgWayfinderRing 620ms cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes bgWayfinderRing {
+  0% {
+    box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.62), 0 0 0 0 rgba(59, 130, 246, 0.75), 0 0 24px rgba(59, 130, 246, 0.65);
+  }
+  100% {
+    box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.62), 0 0 0 16px rgba(59, 130, 246, 0), 0 0 28px rgba(59, 130, 246, 0.35);
+  }
+}
+
+/* Floating wayfinder pill that shows what tab/module is being clicked */
+.bg-tour-wayfinder {
+  position: fixed;
+  z-index: 10003;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #0F172A;
+  color: #FFFFFF;
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: 1px solid rgba(96, 165, 250, 0.45);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.38), 0 0 0 3px rgba(59, 130, 246, 0.22);
+  pointer-events: none;
+  white-space: nowrap;
+  animation: bgWayfinderIn 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bg-tour-wayfinder.active {
+  display: inline-flex;
+}
+
+.bg-tour-wayfinder-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #60A5FA;
+  box-shadow: 0 0 8px #60A5FA;
+  animation: bgWayfinderDotPulse 600ms ease-in-out infinite alternate;
+}
+
+@keyframes bgWayfinderDotPulse {
+  from { transform: scale(0.85); opacity: 0.75; }
+  to { transform: scale(1.25); opacity: 1; }
+}
+
+@keyframes bgWayfinderIn {
+  from { opacity: 0; transform: translateY(4px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Smooth entrance animation applied to views/tabs/drawers when switched by tour */
+.bg-tour-view-entering {
+  animation: bgTourViewEnter 350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes bgTourViewEnter {
+  from {
+    opacity: 0.15;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   2. STEP POPOVER CARD
+   ------------------------------------------------------------------------- */
+.bg-tour-popover {
+  position: fixed;
+  z-index: 10001;
+  width: 390px;
+  max-width: calc(100vw - 32px);
+  background: var(--bg-surface, #FFFFFF);
+  color: var(--text-primary, #0F172A);
+  border: 1px solid var(--border-subtle, #E2E8F0);
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.25), 0 8px 10px -6px rgba(15, 23, 42, 0.15);
+  transition: top 360ms cubic-bezier(0.22, 1, 0.36, 1),
+              left 360ms cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 210ms ease,
+              transform 210ms ease;
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+.bg-tour-popover.is-transitioning {
+  opacity: 0.45;
+  transform: scale(0.985);
+}
+
+/* Location breadcrumb bar inside popover showing where the feature lives */
+.bg-tour-location-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-tertiary, #475569);
+  background: var(--bg-muted, #F8FAFC);
+  border: 1px solid var(--border-subtle, #E2E8F0);
+  border-radius: 6px;
+  padding: 4px 8px;
+  width: fit-content;
+  max-width: 100%;
+  line-height: 1.3;
+}
+
+.bg-tour-location-bar.just-switched {
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+  color: #1E40AF;
+}
+
+.bg-tour-location-bar svg {
+  flex-shrink: 0;
+  color: var(--primary, #1D4ED8);
+}
+
+.bg-tour-popover:focus {
+  outline: 2px solid var(--primary, #1D4ED8);
+  outline-offset: 2px;
+}
+
+/* Header: Section Chip & Close */
+.bg-tour-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.bg-tour-section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: var(--primary-soft, #EFF6FF);
+  color: var(--primary, #1D4ED8);
+  border: 1px solid rgba(29, 78, 216, 0.2);
+}
+
+.bg-tour-quick-tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #FEF3C7;
+  color: #92400E;
+  margin-left: 4px;
+}
+
+.bg-tour-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary, #475569);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.bg-tour-close-btn:hover {
+  background: var(--bg-elevated, #F1F5F9);
+  color: var(--text-primary, #0F172A);
+}
+
+.bg-tour-close-btn:focus-visible {
+  outline: 2px solid var(--primary, #1D4ED8);
+  outline-offset: 1px;
+}
+
+/* Title & Body */
+.bg-tour-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary, #0F172A);
+  line-height: 1.35;
+}
+
+.bg-tour-body {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text-secondary, #334155);
+}
+
+/* "Why it matters" tip box */
+.bg-tour-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--bg-elevated, #F8FAFC);
+  border-left: 3px solid var(--primary, #1D4ED8);
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-tertiary, #475569);
+}
+
+.bg-tour-tip-icon {
+  flex-shrink: 0;
+  color: var(--primary, #1D4ED8);
+  margin-top: 1px;
+}
+
+/* Footer & Controls */
+.bg-tour-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle, #E2E8F0);
+  gap: 8px;
+}
+
+.bg-tour-progress-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bg-tour-step-counter {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-tertiary, #475569);
+  font-family: var(--font-mono, monospace);
+}
+
+.bg-tour-progress-bar-wrap {
+  width: 90px;
+  height: 4px;
+  background: var(--bg-elevated, #E2E8F0);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.bg-tour-progress-bar-fill {
+  height: 100%;
+  background: var(--primary, #1D4ED8);
+  transition: width 200ms ease;
+  border-radius: 2px;
+}
+
+.bg-tour-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bg-tour-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 150ms ease;
+  border: 1px solid transparent;
+  font-family: inherit;
+}
+
+.bg-tour-btn:focus-visible {
+  outline: 2px solid var(--primary, #1D4ED8);
+  outline-offset: 1px;
+}
+
+.bg-tour-btn-ghost {
+  background: transparent;
+  color: var(--text-tertiary, #475569);
+}
+
+.bg-tour-btn-ghost:hover {
+  background: var(--bg-elevated, #F1F5F9);
+  color: var(--text-primary, #0F172A);
+}
+
+.bg-tour-btn-secondary {
+  background: var(--bg-surface, #FFFFFF);
+  color: var(--text-secondary, #334155);
+  border-color: var(--border-strong, #CBD5E1);
+}
+
+.bg-tour-btn-secondary:hover {
+  background: var(--bg-elevated, #F8FAFC);
+  color: var(--text-primary, #0F172A);
+}
+
+.bg-tour-btn-primary {
+  background: var(--primary, #1D4ED8);
+  color: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.bg-tour-btn-primary:hover {
+  background: var(--primary-hover, #1E40AF);
+}
+
+/* -------------------------------------------------------------------------
+   3. FIRST-VISIT WELCOME CARD DIALOG
+   ------------------------------------------------------------------------- */
+.bg-tour-welcome-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10010;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+
+.bg-tour-welcome-backdrop.active {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bg-tour-welcome-card {
+  width: 490px;
+  max-width: 100%;
+  background: var(--bg-surface, #FFFFFF);
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle, #E2E8F0);
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.35);
+  padding: 28px 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: bgTourScaleUp 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes bgTourScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.bg-tour-welcome-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  border-radius: 100px;
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid rgba(29, 78, 216, 0.2);
+}
+
+.bg-tour-welcome-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary, #0F172A);
+  line-height: 1.3;
+}
+
+.bg-tour-welcome-desc {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-secondary, #334155);
+}
+
+.bg-tour-welcome-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.bg-tour-welcome-opt-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle, #E2E8F0);
+  background: var(--bg-surface, #FFFFFF);
+  cursor: pointer;
+  text-align: left;
+  transition: all 150ms ease;
+}
+
+.bg-tour-welcome-opt-card:hover {
+  border-color: var(--primary, #1D4ED8);
+  background: var(--primary-soft, #EFF6FF);
+  transform: translateY(-1px);
+}
+
+.bg-tour-welcome-opt-card:focus-visible {
+  outline: 2px solid var(--primary, #1D4ED8);
+  outline-offset: 1px;
+}
+
+.bg-tour-opt-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--bg-elevated, #F1F5F9);
+  color: var(--primary, #1D4ED8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-tour-opt-content {
+  flex: 1;
+}
+
+.bg-tour-opt-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-primary, #0F172A);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bg-tour-opt-tag {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #E2E8F0;
+  color: #334155;
+}
+
+.bg-tour-opt-desc {
+  font-size: 12px;
+  color: var(--text-tertiary, #475569);
+  margin-top: 2px;
+}
+
+.bg-tour-welcome-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle, #E2E8F0);
+}
+
+.bg-tour-welcome-help-hint {
+  font-size: 11.5px;
+  color: var(--text-tertiary, #475569);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Ensure empty toast stack never blocks clicks to floating help button */
+.toast-stack {
+  pointer-events: none;
+}
+.toast-item {
+  pointer-events: auto;
+}
+
+/* 4. FLOATING 48px CIRCULAR HELP BUTTON & CONTEXT MENU */
+.bg-tour-fab {
+  position: fixed;
+  bottom: 88px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--primary, #1D4ED8);
+  color: #FFFFFF;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 6px 18px rgba(29, 78, 216, 0.42), 0 2px 6px rgba(15, 23, 42, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10015;
+  pointer-events: auto;
+  transition: transform 180ms ease, background 150ms ease, box-shadow 180ms ease, opacity 180ms ease;
+  font-family: inherit;
+}
+
+body.bg-tour-running .bg-tour-fab {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bg-tour-fab:hover {
+  background: var(--primary-hover, #1E40AF);
+  transform: scale(1.06);
+  box-shadow: 0 8px 22px rgba(29, 78, 216, 0.52);
+}
+
+.bg-tour-fab:focus-visible {
+  outline: 3px solid #60A5FA;
+  outline-offset: 3px;
+}
+
+/* One-time gentle pulse on first load */
+.bg-tour-fab.pulse-once {
+  animation: bgHelpPulse 2.4s ease-out 1;
+}
+
+@keyframes bgHelpPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(29, 78, 216, 0.7), 0 4px 14px rgba(29, 78, 216, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 16px rgba(29, 78, 216, 0), 0 4px 14px rgba(29, 78, 216, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(29, 78, 216, 0), 0 4px 14px rgba(29, 78, 216, 0.4);
+  }
+}
+
+/* Floating Help Dropdown Menu */
+.bg-tour-menu {
+  position: fixed;
+  bottom: 144px;
+  right: 20px;
+  width: 264px;
+  background: var(--bg-surface, #FFFFFF);
+  border: 1px solid var(--border-subtle, #E2E8F0);
+  border-radius: 12px;
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.22), 0 6px 12px rgba(15, 23, 42, 0.12);
+  padding: 6px;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 10016;
+  pointer-events: none;
+  animation: bgMenuFade 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bg-tour-menu.open {
+  display: flex;
+  pointer-events: auto;
+}
+
+@keyframes bgMenuFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bg-tour-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary, #0F172A);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 120ms ease, color 120ms ease;
+  width: 100%;
+  pointer-events: auto;
+  font-family: inherit;
+}
+
+.bg-tour-menu-item * {
+  pointer-events: none;
+}
+
+.bg-tour-menu-item:hover {
+  background: var(--bg-elevated, #F1F5F9);
+  color: var(--primary, #1D4ED8);
+}
+
+.bg-tour-menu-item:focus-visible {
+  outline: 2px solid var(--primary, #1D4ED8);
+  outline-offset: -1px;
+}
+
+.bg-tour-menu-item-icon {
+  flex-shrink: 0;
+  color: var(--text-tertiary, #475569);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-tour-menu-item:hover .bg-tour-menu-item-icon {
+  color: var(--primary, #1D4ED8);
+}
+
+.bg-tour-menu-divider {
+  height: 1px;
+  background: var(--border-subtle, #E2E8F0);
+  margin: 4px 6px;
+}
+
+/* -------------------------------------------------------------------------
+   5. HELP & LEARN SIDE DRAWER (Role Guide, Glossary, Shortcuts)
+   ------------------------------------------------------------------------- */
+.bg-tour-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10020;
+  display: none;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+.bg-tour-drawer-backdrop.open {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bg-tour-drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 440px;
+  max-width: 90vw;
+  background: var(--bg-surface, #FFFFFF);
+  border-left: 1px solid var(--border-subtle, #E2E8F0);
+  box-shadow: -10px 0 30px rgba(15, 23, 42, 0.2);
+  display: flex;
+  flex-direction: column;
+  z-index: 10021;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(100%);
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), visibility 260ms;
+  box-sizing: border-box;
+}
+
+.bg-tour-drawer.open {
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+.bg-tour-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-subtle, #E2E8F0);
+  background: var(--bg-muted, #F8FAFC);
+}
+
+.bg-tour-drawer-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary, #0F172A);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Drawer Tabs */
+.bg-tour-drawer-tabs {
+  display: flex;
+  padding: 10px 16px 0;
+  background: var(--bg-muted, #F8FAFC);
+  border-bottom: 1px solid var(--border-subtle, #E2E8F0);
+  gap: 4px;
+}
+
+.bg-tour-tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-tertiary, #475569);
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease;
+  font-family: inherit;
+}
+
+.bg-tour-tab-btn:hover {
+  color: var(--text-primary, #0F172A);
+}
+
+.bg-tour-tab-btn.active {
+  color: var(--primary, #1D4ED8);
+  border-bottom-color: var(--primary, #1D4ED8);
+}
+
+.bg-tour-tab-btn:focus-visible {
+  outline: 2px solid var(--primary, #1D4ED8);
+  outline-offset: -2px;
+}
+
+/* Drawer Body Scroll Area */
+.bg-tour-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bg-tour-drawer-section {
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bg-tour-drawer-section.active {
+  display: flex;
+}
+
+/* Role Guide Cards */
+.bg-tour-role-card {
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle, #E2E8F0);
+  background: var(--bg-elevated, #F8FAFC);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bg-tour-role-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bg-tour-role-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary, #0F172A);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bg-tour-role-desc {
+  font-size: 12.5px;
+  color: var(--text-secondary, #334155);
+  line-height: 1.45;
+}
+
+.bg-tour-role-perms {
+  font-size: 11.5px;
+  color: var(--text-tertiary, #475569);
+  background: var(--bg-surface, #FFFFFF);
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle, #E2E8F0);
+}
+
+/* Glossary Live Search */
+.bg-tour-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.bg-tour-search-icon {
+  position: absolute;
+  left: 10px;
+  color: var(--text-placeholder, #64748B);
+  pointer-events: none;
+}
+
+.bg-tour-search-input {
+  width: 100%;
+  padding: 8px 12px 8px 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border-strong, #CBD5E1);
+  font-size: 13px;
+  font-family: inherit;
+  background: var(--bg-surface, #FFFFFF);
+  color: var(--text-primary, #0F172A);
+  box-sizing: border-box;
+}
+
+.bg-tour-search-input:focus {
+  outline: 2px solid var(--primary, #1D4ED8);
+  border-color: var(--primary, #1D4ED8);
+}
+
+.bg-tour-glossary-item {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle, #E2E8F0);
+  background: var(--bg-surface, #FFFFFF);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bg-tour-glossary-term {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-primary, #0F172A);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bg-tour-glossary-def {
+  font-size: 12.5px;
+  color: var(--text-secondary, #334155);
+  line-height: 1.45;
+}
+
+/* Keyboard Shortcuts Table */
+.bg-tour-shortcut-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border-subtle, #E2E8F0);
+  font-size: 13px;
+}
+
+.bg-tour-shortcut-row:last-child {
+  border-bottom: none;
+}
+
+.bg-tour-kbd {
+  display: inline-block;
+  padding: 2px 7px;
+  font-size: 11.5px;
+  font-family: var(--font-mono, monospace);
+  font-weight: 600;
+  color: var(--text-primary, #0F172A);
+  background: var(--bg-elevated, #F1F5F9);
+  border: 1px solid var(--border-strong, #CBD5E1);
+  border-radius: 4px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* Drawer Footer */
+.bg-tour-drawer-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border-subtle, #E2E8F0);
+  background: var(--bg-muted, #F8FAFC);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* -------------------------------------------------------------------------
+   6. JARGON INFO TOOLTIPS (Non-intrusive)
+   ------------------------------------------------------------------------- */
+.bg-jargon-help-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg-elevated, #E2E8F0);
+  color: var(--text-tertiary, #475569);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: help;
+  margin-left: 4px;
+  vertical-align: middle;
+  border: none;
+  padding: 0;
+  line-height: 1;
+}
+
+.bg-jargon-help-icon:hover {
+  background: var(--primary-soft, #EFF6FF);
+  color: var(--primary, #1D4ED8);
+}
+
+/* -------------------------------------------------------------------------
+   7. RESPONSIVENESS & ACCESSIBILITY (WCAG 2.1 AA)
+   ------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .bg-tour-popover {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 12px !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    max-width: none !important;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .bg-tour-drawer {
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  .bg-tour-fab {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .bg-tour-menu {
+    right: 16px;
+    bottom: 74px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-tour-overlay,
+  .bg-tour-blocker,
+  .bg-tour-spotlight,
+  .bg-tour-popover,
+  .bg-tour-welcome-backdrop,
+  .bg-tour-welcome-card,
+  .bg-tour-drawer,
+  .bg-tour-fab,
+  .bg-tour-menu {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+

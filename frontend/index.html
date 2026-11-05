@@ -12,6 +12,7 @@
     />
     <link rel="stylesheet" href="/static/css/styles.css" />
     <link rel="stylesheet" href="/static/css/theme.css" />
+    <link rel="stylesheet" href="/static/css/tour.css" />
   </head>
   <body>
     <div class="app-shell">
@@ -79,7 +80,7 @@
             <div class="sb-section-title">
               <span>Workspace</span>
             </div>
-            <div class="sb-nav-list">
+            <div class="sb-nav-list" data-tour="sidebar-nav">
               <button
                 class="sb-nav-item active"
                 data-view="review"
@@ -188,7 +189,7 @@
                 + New Check
               </button>
             </div>
-            <div class="sb-nav-list" id="submissions-list-container">
+            <div class="sb-nav-list" id="submissions-list-container" data-tour="submissions-queue">
               <!-- Populated by app.js -->
             </div>
           </div>
@@ -220,7 +221,7 @@
                 <span class="demo-controls-label">View as</span>
               </div>
 
-              <div class="role-grid-2x2" id="role-pills-container">
+              <div class="role-grid-2x2" id="role-pills-container" data-tour="role-switcher">
                 <button
                   class="role-pill-btn active"
                   data-role="creator"
@@ -318,6 +319,7 @@
             <div
               class="workflow-stepper"
               id="workflow-ribbon-steps"
+              data-tour="stepper"
               aria-label="Governance Workflow Stage"
             >
               <!-- Dynamically rendered by app.js -->
@@ -329,6 +331,7 @@
             <div
               class="compliance-score-pill"
               id="topbar-compliance-pill"
+              data-tour="brand-score"
               title="Real-Time Brand Compliance Score for Active Submission"
             >
               <span class="score-label">Brand Score</span>
@@ -373,6 +376,7 @@
             <div class="inspector-header">
               <div
                 class="inspector-tabs"
+                data-tour="inspector-tabs"
                 role="tablist"
                 aria-label="Inspector Views"
               >
@@ -417,7 +421,7 @@
             </div>
 
             <!-- Sticky Bottom Approval Gate Footer -->
-            <div class="inspector-footer" id="workflow-gate-footer">
+            <div class="inspector-footer" id="workflow-gate-footer" data-tour="workflow-footer">
               <!-- Populated by app.js -->
             </div>
           </aside>
@@ -430,7 +434,7 @@
           style="display: none"
           aria-label="Brand Knowledge Base"
         >
-          <div class="page-container" id="brandkit-view-container"></div>
+          <div class="page-container" id="brandkit-view-container" data-tour="brandkit-view"></div>
         </section>
 
         <!-- VIEW 3: GOVERNANCE INSIGHTS & LEARNING LOOP (Step 9) -->
@@ -440,7 +444,7 @@
           style="display: none"
           aria-label="Governance Insights"
         >
-          <div class="page-container" id="insights-view-container"></div>
+          <div class="page-container" id="insights-view-container" data-tour="insights-view"></div>
         </section>
 
         <!-- VIEW 4: AUDIT TRAIL & AI DISCLOSURE LOG -->
@@ -450,7 +454,7 @@
           style="display: none"
           aria-label="Audit and AI Trust Log"
         >
-          <div class="page-container" id="audit-view-container"></div>
+          <div class="page-container" id="audit-view-container" data-tour="audit-view"></div>
         </section>
       </div>
     </div>
@@ -465,7 +469,7 @@
       aria-modal="true"
       aria-labelledby="modal-new-sub-heading"
     >
-      <div class="modal-window modal-window-lg">
+      <div class="modal-window modal-window-lg" data-tour="modal-new-submission">
         <div class="modal-header">
           <h3 id="modal-new-sub-heading">
             New Content Check / Load Evaluation Scenario
@@ -541,5 +545,18 @@
       })();
     </script>
     <script src="/static/js/app.js"></script>
+    <script>
+      if (typeof BrandGuardApp !== "undefined") {
+        window.BrandGuardApp = BrandGuardApp;
+      }
+    </script>
+    <script src="/static/js/tour.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (window.BrandGuardTour && BrandGuardTour.init) {
+          BrandGuardTour.init();
+        }
+      });
+    </script>
   </body>
 </html>
