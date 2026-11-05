@@ -10,10 +10,21 @@ from contextlib import contextmanager
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
-DB_PATH = os.environ.get(
-    "BRANDGUARD_DB_PATH",
-    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "brandguard.db"),
-)
+import tempfile
+
+
+def _resolve_db_path() -> str:
+    env_path = os.environ.get("BRANDGUARD_DB_PATH")
+    if env_path:
+        return env_path
+    default_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # On Vercel or read-only serverless filesystems, use /tmp/brandguard.db
+    if os.environ.get("VERCEL") or not os.access(default_dir, os.W_OK):
+        return os.path.join(tempfile.gettempdir(), "brandguard.db")
+    return os.path.join(default_dir, "brandguard.db")
+
+
+DB_PATH = _resolve_db_path()
 
 
 def now_iso() -> str:

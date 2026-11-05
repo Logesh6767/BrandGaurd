@@ -16,6 +16,11 @@ from backend.routers import auth_routes, brand_kit, insights, submissions
 from backend.seed import seed_if_empty
 
 
+# Ensure DB schema and seed data exist even on serverless runtimes (e.g. Vercel) that skip ASGI lifespan
+init_db()
+seed_if_empty()
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Initialize SQLite schema and seed demo data on startup."""
