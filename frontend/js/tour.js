@@ -573,6 +573,25 @@ const BrandGuardTour = (() => {
     }
   }
 
+  // Synchronously expand the sidebar without CSS grid transition lag so getBoundingClientRect() is immediately accurate
+  function ensureSidebarExpandedSync() {
+    const shell = document.querySelector(".app-shell");
+    if (!shell || !shell.classList.contains("sb-collapsed")) return;
+    const prevTransition = shell.style.transition;
+    shell.style.transition = "none";
+    shell.classList.remove("sb-collapsed");
+    const btn = document.getElementById("sb-collapse-btn");
+    if (btn) {
+      btn.setAttribute("title", "Collapse sidebar");
+      btn.setAttribute("aria-label", "Collapse sidebar");
+    }
+    // Force synchronous reflow so sidebar children immediately measure at full 260px width
+    void shell.offsetWidth;
+    requestAnimationFrame(() => {
+      shell.style.transition = prevTransition;
+    });
+  }
+
   // Choreographed Wayfinding Step: Spotlights the trigger button/tab before switching
   async function showWayfinderStep(triggerEl, label, token, durationMs = 520) {
     if (!triggerEl || prefersReducedMotion() || token !== stepTransitionToken) return;
@@ -950,6 +969,7 @@ const BrandGuardTour = (() => {
     let justSwitched = false;
 
     hideWayfinder();
+    ensureSidebarExpandedSync();
 
     // 0. Ensure Admin role is active during tour for full-fledged access to all features & gates
     if (app && app.switchRole) {
@@ -1146,10 +1166,20 @@ const BrandGuardTour = (() => {
     }
 
     // 10. Render step and update spotlight position after layout paint
+    ensureSidebarExpandedSync();
     renderStep(index, justSwitched);
     await new Promise((resolve) => requestAnimationFrame(resolve));
     if (token !== stepTransitionToken) return;
     updatePosition(target, step.placement);
+    // Secondary frame verification in case any font/layout settled
+    setTimeout(() => {
+      if (active && token === stepTransitionToken && activeSteps[currentIndex]) {
+        const latestTarget = findTargetElement(activeSteps[currentIndex].targetSelector);
+        if (latestTarget) {
+          updatePosition(latestTarget, activeSteps[currentIndex].placement);
+        }
+      }
+    }, 120);
     document.getElementById("bg-tour-btn-next")?.focus();
   }
 
@@ -1161,6 +1191,7 @@ const BrandGuardTour = (() => {
     active = true;
 
     initialContext = snapshotContext();
+    ensureSidebarExpandedSync();
 
     // Mark as seen in storage
     try {
@@ -1168,6 +1199,7 @@ const BrandGuardTour = (() => {
     } catch (e) {}
 
     // Hide welcome card & help menu if open
+    hideFabHint();
     closeWelcomeModal();
     closeHelpMenu();
     closeHelpDrawer();
@@ -1256,8 +1288,38 @@ const BrandGuardTour = (() => {
     }
   }
 
+  // Floating Helper Callout Note (shows after refresh, auto-dismisses)
+  let fabHintTimer = null;
+
+  function showFabHint() {
+    if (!domElements.fabHint || active) return;
+    if (domElements.welcomeBackdrop?.classList.contains("active")) return;
+    if (domElements.menu?.classList.contains("open")) return;
+
+    if (fabHintTimer) clearTimeout(fabHintTimer);
+    domElements.fabHint.classList.remove("visible");
+    // Force reflow so countdown bar restarts cleanly
+    void domElements.fabHint.offsetWidth;
+    domElements.fabHint.classList.add("visible");
+    domElements.fab?.classList.add("pulse-once");
+
+    fabHintTimer = setTimeout(() => {
+      hideFabHint();
+      domElements.fab?.classList.remove("pulse-once");
+    }, 6500);
+  }
+
+  function hideFabHint() {
+    if (fabHintTimer) {
+      clearTimeout(fabHintTimer);
+      fabHintTimer = null;
+    }
+    domElements.fabHint?.classList.remove("visible");
+  }
+
   // Help Dropdown Menu
   function toggleHelpMenu() {
+    hideFabHint();
     if (!domElements.menu) return;
     const isOpen = domElements.menu.classList.contains("open");
     if (isOpen) {
@@ -1386,7 +1448,7 @@ const BrandGuardTour = (() => {
       </div>
     `;
 
-    // 3. Floating 48px Circular Help Button
+    // 3. Floating 48px Circular Help Button & Refresh Callout Note
     const fab = document.createElement("button");
     fab.className = "bg-tour-fab pulse-once";
     fab.id = "bg-tour-fab";
@@ -1401,10 +1463,29 @@ const BrandGuardTour = (() => {
       </svg>
     `;
 
+    const fabHint = document.createElement("div");
+    fabHint.className = "bg-tour-fab-hint";
+    fabHint.id = "bg-tour-fab-hint";
+    fabHint.setAttribute("role", "status");
+    fabHint.setAttribute("aria-live", "polite");
+    fabHint.innerHTML = `
+      <div class="bg-tour-fab-hint-top">
+        <span class="bg-tour-fab-hint-title">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Interactive Guided Tour</span>
+        </span>
+        <button type="button" class="bg-tour-fab-hint-close" id="btn-fab-hint-close" aria-label="Dismiss tour tip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <p class="bg-tour-fab-hint-text">Click this <strong>?</strong> button anytime to launch the guided tour, role guide, or glossary.</p>
+      <div class="bg-tour-fab-hint-timer" aria-hidden="true"></div>
+    `;
+
     // Remove pulse animation after initial attraction
     setTimeout(() => {
       fab.classList.remove("pulse-once");
-    }, 3000);
+    }, 6500);
 
     // 4. Floating Help Context Menu
     const menu = document.createElement("div");
@@ -1640,6 +1721,7 @@ const BrandGuardTour = (() => {
     document.body.appendChild(announcer);
     document.body.appendChild(welcomeBackdrop);
     document.body.appendChild(fab);
+    document.body.appendChild(fabHint);
     document.body.appendChild(menu);
     document.body.appendChild(drawerBackdrop);
     document.body.appendChild(drawer);
@@ -1654,6 +1736,7 @@ const BrandGuardTour = (() => {
       announcer,
       welcomeBackdrop,
       fab,
+      fabHint,
       menu,
       drawerBackdrop,
       drawer,
@@ -1667,10 +1750,23 @@ const BrandGuardTour = (() => {
         localStorage.setItem(STORAGE_KEY, "skipped");
       } catch (e) {}
       closeWelcomeModal();
+      setTimeout(showFabHint, 350);
     });
 
-    // Bind Floating Help FAB listener
+    // Bind Floating Help FAB & Refresh Callout Note listeners
     fab.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleHelpMenu();
+    });
+
+    document.getElementById("btn-fab-hint-close")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      hideFabHint();
+    });
+
+    fabHint.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
       toggleHelpMenu();
@@ -1771,13 +1867,23 @@ const BrandGuardTour = (() => {
       }
     });
 
-    // Window resize handler
-    window.addEventListener("resize", () => {
+    // Window & sidebar resize handlers
+    const relockActiveStep = () => {
       if (active && activeSteps[currentIndex]) {
         const target = findTargetElement(activeSteps[currentIndex].targetSelector);
         updatePosition(target, activeSteps[currentIndex].placement);
       }
-    });
+    };
+    window.addEventListener("resize", relockActiveStep);
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(() => {
+        if (active) relockActiveStep();
+      });
+      const sidebarEl = document.getElementById("app-sidebar");
+      const shellEl = document.querySelector(".app-shell");
+      if (sidebarEl) ro.observe(sidebarEl);
+      if (shellEl) ro.observe(shellEl);
+    }
   }
 
   // Public Initialization
@@ -1794,6 +1900,9 @@ const BrandGuardTour = (() => {
 
     if (!hasSeen) {
       setTimeout(openWelcomeModal, 600);
+    } else {
+      // On every subsequent refresh, briefly show the floating helper note next to the '?' button
+      setTimeout(showFabHint, 650);
     }
   }
 

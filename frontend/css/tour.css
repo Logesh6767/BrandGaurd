@@ -567,22 +567,27 @@
 /* 4. FLOATING 48px CIRCULAR HELP BUTTON & CONTEXT MENU */
 .bg-tour-fab {
   position: fixed;
-  bottom: 88px;
-  right: 20px;
+  bottom: 22px;
+  right: 22px;
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: var(--primary, #1D4ED8);
+  background: linear-gradient(180deg, #0077ED 0%, #0055B3 100%);
   color: #FFFFFF;
-  border: 2px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 6px 18px rgba(29, 78, 216, 0.42), 0 2px 6px rgba(15, 23, 42, 0.16);
+  border: 1.5px solid rgba(255, 255, 255, 0.88);
+  box-shadow: 0 8px 22px rgba(0, 102, 204, 0.38), 0 2px 6px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 10015;
   pointer-events: auto;
-  transition: transform 180ms ease, background 150ms ease, box-shadow 180ms ease, opacity 180ms ease;
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+              right 240ms cubic-bezier(0.22, 1, 0.36, 1),
+              bottom 240ms cubic-bezier(0.22, 1, 0.36, 1),
+              background 150ms ease,
+              box-shadow 200ms ease,
+              opacity 180ms ease;
   font-family: inherit;
 }
 
@@ -592,9 +597,13 @@ body.bg-tour-running .bg-tour-fab {
 }
 
 .bg-tour-fab:hover {
-  background: var(--primary-hover, #1E40AF);
-  transform: scale(1.06);
-  box-shadow: 0 8px 22px rgba(29, 78, 216, 0.52);
+  background: linear-gradient(180deg, #0080FF 0%, #005EC2 100%);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 12px 26px rgba(0, 102, 204, 0.48), 0 4px 10px rgba(0, 0, 0, 0.16);
+}
+
+.bg-tour-fab:active {
+  transform: scale(0.96);
 }
 
 .bg-tour-fab:focus-visible {
@@ -604,38 +613,187 @@ body.bg-tour-running .bg-tour-fab {
 
 /* One-time gentle pulse on first load */
 .bg-tour-fab.pulse-once {
-  animation: bgHelpPulse 2.4s ease-out 1;
+  animation: bgHelpPulse 2.4s ease-out 2;
 }
 
 @keyframes bgHelpPulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(29, 78, 216, 0.7), 0 4px 14px rgba(29, 78, 216, 0.4);
+    box-shadow: 0 0 0 0 rgba(0, 119, 237, 0.68), 0 6px 18px rgba(0, 102, 204, 0.38);
   }
   70% {
-    box-shadow: 0 0 0 16px rgba(29, 78, 216, 0), 0 4px 14px rgba(29, 78, 216, 0.4);
+    box-shadow: 0 0 0 16px rgba(0, 119, 237, 0), 0 6px 18px rgba(0, 102, 204, 0.38);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(29, 78, 216, 0), 0 4px 14px rgba(29, 78, 216, 0.4);
+    box-shadow: 0 0 0 0 rgba(0, 119, 237, 0), 0 6px 18px rgba(0, 102, 204, 0.38);
   }
+}
+
+/* Floating Helper Callout Note next to FAB (shows on refresh, auto-dismisses) */
+.bg-tour-fab-hint {
+  position: fixed;
+  bottom: 20px;
+  right: 80px;
+  width: 274px;
+  max-width: calc(100vw - 104px);
+  background: rgba(29, 29, 31, 0.92);
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  color: #F5F5F7;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  padding: 10px 13px 13px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28), 0 4px 10px rgba(0, 0, 0, 0.14);
+  z-index: 10015;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0;
+  transform: translateX(10px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1),
+              right 240ms cubic-bezier(0.22, 1, 0.36, 1),
+              bottom 240ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.bg-tour-fab-hint:hover {
+  transform: translateX(-1px) scale(1.01);
+  border-color: rgba(100, 181, 246, 0.45);
+}
+
+.bg-tour-fab-hint.visible {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+}
+
+body.bg-tour-running .bg-tour-fab-hint {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.bg-tour-fab-hint::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  bottom: 18px;
+  width: 10px;
+  height: 10px;
+  background: #232326;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-right: 1px solid rgba(255, 255, 255, 0.16);
+  transform: rotate(45deg);
+}
+
+.bg-tour-fab-hint-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.bg-tour-fab-hint-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #64B5F6;
+  letter-spacing: -0.005em;
+}
+
+.bg-tour-fab-hint-close {
+  background: transparent;
+  border: none;
+  color: #A1A1A6;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 5px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 140ms ease, color 140ms ease;
+}
+
+.bg-tour-fab-hint-close:hover {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.bg-tour-fab-hint-text {
+  font-size: 12px;
+  line-height: 1.44;
+  color: #E5E5EA;
+  margin: 0;
+}
+
+.bg-tour-fab-hint-timer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2.5px;
+  width: 100%;
+  background: linear-gradient(90deg, #0077ED, #64B5F6);
+  transform-origin: left center;
+}
+
+.bg-tour-fab-hint.visible .bg-tour-fab-hint-timer {
+  animation: bgFabHintCountdown 6.5s linear forwards;
+}
+
+@keyframes bgFabHintCountdown {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
 }
 
 /* Floating Help Dropdown Menu */
 .bg-tour-menu {
   position: fixed;
-  bottom: 144px;
-  right: 20px;
-  width: 264px;
-  background: var(--bg-surface, #FFFFFF);
-  border: 1px solid var(--border-subtle, #E2E8F0);
-  border-radius: 12px;
-  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.22), 0 6px 12px rgba(15, 23, 42, 0.12);
+  bottom: 78px;
+  right: 22px;
+  width: 266px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 6px;
   display: none;
   flex-direction: column;
   gap: 2px;
   z-index: 10016;
   pointer-events: none;
-  animation: bgMenuFade 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  animation: bgMenuFade 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* When Review Studio is active on desktop (>960px), dock FAB + hint + menu in the bottom-right of the Document Canvas so they never cover the right Inspector pane or its gate footer */
+@media (min-width: 1281px) {
+  body:has(#view-review:not([style*="none"])) .bg-tour-fab {
+    right: 454px;
+  }
+  body:has(#view-review:not([style*="none"])) .bg-tour-fab-hint {
+    right: 512px;
+  }
+  body:has(#view-review:not([style*="none"])) .bg-tour-menu {
+    right: 454px;
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1280px) {
+  body:has(#view-review:not([style*="none"])) .bg-tour-fab {
+    right: 398px;
+  }
+  body:has(#view-review:not([style*="none"])) .bg-tour-fab-hint {
+    right: 456px;
+  }
+  body:has(#view-review:not([style*="none"])) .bg-tour-menu {
+    right: 398px;
+  }
 }
 
 .bg-tour-menu.open {

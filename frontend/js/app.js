@@ -95,16 +95,20 @@ const BrandGuardApp = (() => {
   function showToast(message, borderColor = "#10B981") {
     const container = document.getElementById("toast-container");
     if (!container) return;
+    while (container.children.length >= 2) {
+      container.firstElementChild.remove();
+    }
     const el = document.createElement("div");
     el.className = "toast-item";
-    el.style.borderLeftColor = borderColor;
-    el.innerHTML = message;
+    el.style.setProperty("--toast-accent", borderColor);
+    el.innerHTML = `<span class="toast-dot" aria-hidden="true"></span><span class="toast-body">${message}</span>`;
     container.appendChild(el);
     setTimeout(() => {
       el.style.opacity = "0";
-      el.style.transition = "opacity 0.2s ease";
+      el.style.transform = "translateY(-6px) scale(0.97)";
+      el.style.transition = "opacity 0.2s ease, transform 0.2s ease";
       setTimeout(() => el.remove(), 220);
-    }, 3600);
+    }, 3200);
   }
 
   async function api(path, options = {}) {
@@ -227,10 +231,13 @@ const BrandGuardApp = (() => {
       });
       state.user = res.user;
       updateSidebarPersonaUI();
+      const cleanPersonaName = (state.user.display_name || "User")
+        .split("(")[0]
+        .trim();
       showToast(
-        `Switched workspace role to <strong>${esc(
+        `Switched role to <strong>${esc(
           state.user.role.toUpperCase()
-        )}</strong> (${esc(state.user.display_name)})`
+        )}</strong> · ${esc(cleanPersonaName)}`
       );
       if (state.currentView === "review" && state.activeSubmission) {
         renderReviewWorkspace();
@@ -1758,13 +1765,40 @@ const BrandGuardApp = (() => {
         <div id="add-rule-drawer" class="doc-paper-card" style="display:${
           isAdmin ? "block" : "none"
         };padding:18px 20px;margin-bottom:20px;">
-          <div style="font-weight:700;font-size:var(--text-base);margin-bottom:12px;">
-            Add or Update Verified Rule in Brand Kit v${kit.version}.0
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <span style="font-weight:700;font-size:var(--text-base);">
+                Add or Update Verified Rule in Brand Kit v${kit.version}.0
+              </span>
+              <span id="rule-form-mode-badge" class="meta-chip" style="font-size:11.5px;">
+                Type an existing Rule ID (e.g. A-01, F-12) or click any rule below to auto-fill
+              </span>
+            </div>
+            <button type="button" class="btn btn-ghost btn-xs" onclick="BrandGuardApp.clearRuleForm()">
+              Clear Form
+            </button>
           </div>
+          <datalist id="existing-rule-ids">
+            ${rules
+              .map(
+                (r) =>
+                  `<option value="${esc(r.rule_id)}">${esc(r.rule_id)} — ${esc(r.title)}</option>`
+              )
+              .join("")}
+          </datalist>
           <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:10px;">
             <div>
               <label class="field-label" for="new-rule-id">Rule ID</label>
-              <input type="text" id="new-rule-id" class="input-field" placeholder="F-20" />
+              <input
+                type="text"
+                id="new-rule-id"
+                class="input-field"
+                list="existing-rule-ids"
+                placeholder="e.g. F-20 or A-01"
+                autocomplete="off"
+                oninput="BrandGuardApp.autoFillRuleById(this.value)"
+                onchange="BrandGuardApp.autoFillRuleById(this.value)"
+              />
             </div>
             <div>
               <label class="field-label" for="new-rule-cat">Category</label>
@@ -1774,6 +1808,7 @@ const BrandGuardApp = (() => {
                 <option value="claim">Claims Policy</option>
                 <option value="tone">Voice &amp; Tone</option>
                 <option value="accessibility">Accessibility</option>
+                <option value="visual">Visual Identity</option>
               </select>
             </div>
             <div>
@@ -1813,8 +1848,8 @@ const BrandGuardApp = (() => {
               <input type="text" id="new-rule-replace" class="input-field" placeholder="Approved replacement text" />
             </div>
           </div>
-          <div style="margin-top:12px;display:flex;justify-content:flex-end;">
-            <button class="btn btn-primary btn-xs" onclick="BrandGuardApp.saveNewBrandRule()">
+          <div style="margin-top:12px;display:flex;justify-content:flex-end;gap:8px;">
+            <button id="save-rule-submit-btn" class="btn btn-primary btn-xs" onclick="BrandGuardApp.saveNewBrandRule()">
               Save Rule to Brand Kit v${kit.version}.0
             </button>
           </div>
@@ -1824,7 +1859,7 @@ const BrandGuardApp = (() => {
           <div class="table-scroll-wrap">
             <table class="modern-table">
               <colgroup>
-                <col style="width: 84px;" />
+                <col style="width: 96px;" />
                 <col style="width: 120px;" />
                 <col style="width: 110px;" />
                 <col style="width: 34%;" />
@@ -1848,8 +1883,10 @@ const BrandGuardApp = (() => {
                   .map((r) => {
                     const isExpired = r.expiry_date && r.expiry_date < "2026-11-04";
                     return `
-                    <tr>
-                      <td style="white-space:nowrap;"><span class="mono-code-tag">${nbspId(r.rule_id)}</span></td>
+                    <tr style="cursor:pointer;" title="Click to load ${esc(r.rule_id)} into rule editor" onclick="BrandGuardApp.loadRuleIntoForm('${esc(r.rule_id)}')">
+                      <td style="white-space:nowrap;">
+                        <span class="mono-code-tag" style="cursor:pointer;">${nbspId(r.rule_id)}</span>
+                      </td>
                       <td><span class="meta-chip">${esc(r.category)}</span></td>
                       <td>${renderSeverityPill(r.severity)}</td>
                       <td>
@@ -1890,6 +1927,104 @@ const BrandGuardApp = (() => {
     } catch (err) {
       showToast(esc(err.message), "#E11D48");
     }
+  }
+
+  function autoFillRuleById(rawId) {
+    const normalized = String(rawId || "")
+      .replace(/\u2011/g, "-")
+      .trim()
+      .toUpperCase();
+    const rules = (state.brandKitData && state.brandKitData.rules) || [];
+    const kitVer =
+      (state.brandKitData &&
+        state.brandKitData.active_kit &&
+        state.brandKitData.active_kit.version) ||
+      3;
+    const match = rules.find(
+      (r) => String(r.rule_id || "").trim().toUpperCase() === normalized
+    );
+
+    const catEl = document.getElementById("new-rule-cat");
+    const sevEl = document.getElementById("new-rule-sev");
+    const expEl = document.getElementById("new-rule-expiry");
+    const titleEl = document.getElementById("new-rule-title");
+    const sourceEl = document.getElementById("new-rule-source");
+    const ownerEl = document.getElementById("new-rule-owner");
+    const quoteEl = document.getElementById("new-rule-quote");
+    const disallowEl = document.getElementById("new-rule-disallow");
+    const replaceEl = document.getElementById("new-rule-replace");
+    const badgeEl = document.getElementById("rule-form-mode-badge");
+    const submitBtn = document.getElementById("save-rule-submit-btn");
+
+    if (match) {
+      state.editingRuleId = match.rule_id;
+      if (catEl) catEl.value = match.category || "fact";
+      if (sevEl) sevEl.value = match.severity || "HIGH";
+      if (expEl) expEl.value = match.expiry_date || "";
+      if (titleEl) titleEl.value = match.title || "";
+      if (sourceEl) sourceEl.value = match.source_doc || "Security Whitepaper v3.0";
+      if (ownerEl) ownerEl.value = match.owner || "Security & Legal Team";
+      if (quoteEl) quoteEl.value = match.exact_quote || "";
+      if (disallowEl) {
+        disallowEl.value = Array.isArray(match.disallow_terms)
+          ? match.disallow_terms.join(", ")
+          : match.disallow_terms || "";
+      }
+      if (replaceEl) replaceEl.value = match.preferred_replacement || "";
+      if (badgeEl) {
+        badgeEl.className = "st-pill st-PENDING_APPROVAL";
+        badgeEl.textContent = `Editing existing rule ${match.rule_id}`;
+      }
+      if (submitBtn) {
+        submitBtn.textContent = `Update Rule ${match.rule_id} in Brand Kit v${kitVer}.0`;
+      }
+    } else {
+      if (state.editingRuleId) {
+        state.editingRuleId = null;
+        if (catEl) catEl.value = "fact";
+        if (sevEl) sevEl.value = "HIGH";
+        if (expEl) expEl.value = "";
+        if (titleEl) titleEl.value = "";
+        if (sourceEl) sourceEl.value = "Security Whitepaper v3.0";
+        if (ownerEl) ownerEl.value = "Security & Legal Team";
+        if (quoteEl) quoteEl.value = "";
+        if (disallowEl) disallowEl.value = "";
+        if (replaceEl) replaceEl.value = "";
+      }
+      if (badgeEl) {
+        badgeEl.className = "meta-chip";
+        badgeEl.textContent = normalized
+          ? `Creating new rule ${normalized}`
+          : "Type an existing Rule ID (e.g. A-01, F-12) or click any rule below to auto-fill";
+      }
+      if (submitBtn) {
+        submitBtn.textContent = `Save Rule to Brand Kit v${kitVer}.0`;
+      }
+    }
+  }
+
+  function clearRuleForm() {
+    state.editingRuleId = "RESET";
+    const idEl = document.getElementById("new-rule-id");
+    if (idEl) {
+      idEl.value = "";
+      idEl.focus();
+    }
+    autoFillRuleById("");
+  }
+
+  function loadRuleIntoForm(ruleId) {
+    const drawer = document.getElementById("add-rule-drawer");
+    if (drawer) {
+      drawer.style.display = "block";
+      drawer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+    const idEl = document.getElementById("new-rule-id");
+    if (idEl) {
+      idEl.value = ruleId;
+    }
+    autoFillRuleById(ruleId);
+    showToast(`Loaded rule <strong>${esc(ruleId)}</strong> for editing`);
   }
 
   async function saveNewBrandRule() {
@@ -2562,6 +2697,9 @@ const BrandGuardApp = (() => {
     resolveEscalation,
     submitWorkflowDecision,
     saveNewBrandRule,
+    autoFillRuleById,
+    clearRuleForm,
+    loadRuleIntoForm,
     applyRuleClarification,
     openNewSubmissionModal,
     fillModalPreset,

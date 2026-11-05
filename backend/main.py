@@ -69,8 +69,20 @@ if os.path.isdir(FRONTEND_DIR):
     app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
 
 
+@app.middleware("http")
+async def disable_static_cache(request, call_next):
+    """Ensure browser refreshes always pick up the latest SPA HTML, CSS, and JS."""
+    response = await call_next(request)
+    if request.url.path == "/" or request.url.path.startswith("/static/"):
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    return response
+
+
 @app.get("/")
 def serve_spa_index():
     """Serve the BrandGuard Single-Page Application."""
     index_path = os.path.join(FRONTEND_DIR, "index.html")
-    return FileResponse(index_path)
+    return FileResponse(
+        index_path,
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"},
+    )
