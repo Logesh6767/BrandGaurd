@@ -2,31 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>BrandGuard — Updated Project Report (Round 2 — CodeNexus India 2026)</title>
+  <title>BrandGuard — Team Nexus | Updated Solution Proposal and Project Plan (Round 2)</title>
   <style>
     @page {
       size: A4;
-      margin: 18mm 16mm;
+      margin: 16mm 16mm 18mm 16mm;
+    }
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       color: #1E293B;
-      line-height: 1.55;
-      font-size: 10.5pt;
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 24px;
+      line-height: 1.52;
+      font-size: 10pt;
+      margin: 0;
+      padding: 0;
+      background: #FFFFFF;
     }
     .eyebrow {
       color: #1D4ED8;
       font-size: 8.5pt;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       margin-bottom: 4px;
     }
     h1 {
       font-size: 24pt;
+      font-weight: 800;
       color: #0F172A;
       margin: 0 0 4px 0;
       letter-spacing: -0.02em;
@@ -34,250 +40,654 @@
     .subtitle {
       font-size: 11.5pt;
       color: #475569;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
     h2 {
       font-size: 13pt;
+      font-weight: 700;
       color: #0F172A;
-      border-bottom: 1px solid #CBD5E1;
+      border-bottom: 1.5px solid #CBD5E1;
       padding-bottom: 5px;
-      margin-top: 22px;
+      margin-top: 20px;
       margin-bottom: 10px;
+      page-break-after: avoid;
     }
     h3 {
       font-size: 10.5pt;
-      color: #1D4ED8;
+      font-weight: 700;
+      color: #1E3A8A;
       margin-top: 14px;
       margin-bottom: 6px;
+      page-break-after: avoid;
+    }
+    p {
+      margin: 0 0 9px 0;
+    }
+    ul, ol {
+      margin: 5px 0 11px 20px;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 4.5px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 10px 0 16px 0;
-      font-size: 9.5pt;
+      margin: 8px 0 14px 0;
+      font-size: 9.2pt;
+      page-break-inside: auto;
+    }
+    tr {
+      page-break-inside: avoid;
+      page-break-after: auto;
     }
     th, td {
       border: 1px solid #CBD5E1;
-      padding: 7px 10px;
+      padding: 6.5px 9px;
       text-align: left;
       vertical-align: top;
     }
     th {
       background-color: #0F2942;
       color: #FFFFFF;
-      font-weight: 600;
+      font-weight: 700;
     }
-    tr:nth-child(even) td {
+    .meta-table th {
+      background-color: #F1F5F9;
+      color: #0F172A;
+      font-weight: 700;
+    }
+    .meta-table td:first-child {
       background-color: #F8FAFC;
+      font-weight: 700;
+      color: #0F172A;
+      width: 32%;
     }
     .callout {
       background: #F1F5F9;
-      border-left: 4px solid #0F62FE;
+      border-left: 4px solid #0F2942;
       padding: 10px 14px;
-      margin: 12px 0;
-      font-size: 9.8pt;
+      margin: 11px 0;
+      font-size: 9.6pt;
+      page-break-inside: avoid;
     }
-    ul {
-      margin: 6px 0 12px 20px;
-    }
-    li {
-      margin-bottom: 4px;
+    .callout-blue {
+      background: #EFF6FF;
+      border-left: 4px solid #1D4ED8;
+      padding: 10px 14px;
+      margin: 11px 0;
+      font-size: 9.6pt;
+      page-break-inside: avoid;
     }
     .badge-done {
       display: inline-block;
       background: #DCFCE7;
       color: #166534;
       font-weight: 700;
-      font-size: 8pt;
-      padding: 2px 6px;
+      font-size: 7.8pt;
+      padding: 1.5px 6px;
       border-radius: 4px;
+      border: 1px solid #86EFAC;
+      white-space: nowrap;
     }
-    @media print {
-      body { padding: 0; }
-      .no-print { display: none; }
+    .badge-r3 {
+      display: inline-block;
+      background: #DBEAFE;
+      color: #1E40AF;
+      font-weight: 700;
+      font-size: 7.8pt;
+      padding: 1.5px 6px;
+      border-radius: 4px;
+      border: 1px solid #93C5FD;
+      white-space: nowrap;
+    }
+    .workflow-grid {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 4px 0;
+      font-size: 9.2pt;
+      page-break-inside: avoid;
+    }
+    .workflow-grid th {
+      background: #0F2942;
+      color: #FFFFFF;
+      text-align: left;
+      padding: 7px 10px;
+    }
+    .workflow-grid td {
+      width: 33.33%;
+      text-align: center;
+      padding: 9px 8px;
+      border: 1px solid #CBD5E1;
+      background: #F8FAFC;
+    }
+    .workflow-grid td.amber-cell {
+      background: #FEF3C7;
+      color: #92400E;
+      border-color: #F59E0B;
+    }
+    .workflow-grid td.green-cell {
+      background: #ECFDF5;
+      color: #065F46;
+      border-color: #6EE7B7;
+    }
+    .arch-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 4px 0;
+      font-size: 9.2pt;
+      page-break-inside: avoid;
+    }
+    .arch-table th {
+      background: #0F2942;
+      color: #FFFFFF;
+      text-align: left;
+      padding: 7px 10px;
+    }
+    .arch-table td {
+      text-align: center;
+      padding: 8px 10px;
+      border: 1px solid #CBD5E1;
+    }
+    .arch-table tr.arch-highlight td {
+      background: #ECFDF5;
+      color: #065F46;
+      border-color: #34D399;
+      font-weight: 600;
+    }
+    .caption {
+      font-size: 8.8pt;
+      font-style: italic;
+      color: #475569;
+      margin: 4px 0 12px 0;
+    }
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 8.8pt;
+      background: #F1F5F9;
+      padding: 1px 4px;
+      border-radius: 3px;
+      color: #0F172A;
+    }
+    .page-break {
+      page-break-before: always;
     }
   </style>
 </head>
 <body>
-  <div class="no-print" style="background:#EFF6FF;border:1px solid #93C5FD;padding:10px 14px;border-radius:6px;margin-bottom:20px;font-size:10pt;">
-    💡 <strong>How to export as your Updated Project PDF:</strong> Press <code>Ctrl + P</code> (or <code>Cmd + P</code>) in your browser and select <strong>"Save as PDF"</strong>.
-  </div>
 
-  <div class="eyebrow">PROBLEM STATEMENT BY INKLOOM AI • UPDATED PROJECT REPORT (ROUND 2 — THE BUILD)</div>
+  <div class="eyebrow">PROBLEM STATEMENT BY INKLOOM AI • UPDATED SOLUTION PROPOSAL &amp; ROUND 2 BUILD REPORT</div>
   <h1>BrandGuard</h1>
   <div class="subtitle">An intelligent brand-governance platform that reviews content before it is published</div>
 
-  <table>
+  <table class="meta-table">
     <thead>
       <tr>
-        <th style="width: 32%;">Project Attribute</th>
+        <th>Project Attribute</th>
         <th>Submission Details</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><strong>Team name</strong></td>
+        <td>Team name</td>
         <td>Nexus</td>
       </tr>
       <tr>
-        <td><strong>Team members</strong></td>
+        <td>Team members</td>
         <td>Logeshwaran V, Muthukumar A, Mohammed Arshath, Poojitha V S</td>
       </tr>
       <tr>
-        <td><strong>Institution / organisation</strong></td>
+        <td>Institution / organisation</td>
         <td>SRM Easwari Engineering College</td>
       </tr>
       <tr>
-        <td><strong>Team lead contact (email)</strong></td>
+        <td>Team lead contact (email)</td>
         <td>logeshwaranvelmurugan@gmail.com</td>
       </tr>
       <tr>
-        <td><strong>Round &amp; submission date</strong></td>
-        <td>Round 2 — The Build | November 2026</td>
+        <td>Public source-code repository</td>
+        <td>https://github.com/Logesh6767/BrandGaurd</td>
+      </tr>
+      <tr>
+        <td>Submission round &amp; date</td>
+        <td>Round 2 — The Build (7th Nov 2026) | Original Proposal: 3rd Nov 2026</td>
       </tr>
     </tbody>
   </table>
 
-  <h2>1. Executive Summary &amp; Round 2 Build Status</h2>
+  <h2>1. Understanding of the problem statement</h2>
   <p>
-    Organisations publish through many hands at once—employees, external agencies, freelancers, and AI writing assistants—leading to outdated facts, unsupported promotional guarantees, misused terminology, off-palette visuals, and inaccessible design.
+    Organisations now publish through many hands at once: employees, agencies, freelancers and AI writing tools. Each contributor interprets the brand slightly differently, and nobody sees the whole picture before content goes live. The result is content with wrong or outdated facts, unsupported promotional claims, off-tone language, misused terminology, off-palette visuals and inaccessible design. These errors usually become visible only after publication, when the damage to credibility is already done.
   </p>
-  <p>
-    In <strong>Round 2 (The Build)</strong>, Team Nexus has transformed the Round 1 proposal into a fully functional, end-to-end web application built with <strong>Python 3.12, FastAPI, SQLite3, and an interactive Single-Page Application (SPA) frontend</strong>. Every step of our 9-step governance sequence works end-to-end without requiring a walkthrough or login barrier.
-  </p>
+  <p>The brief asks for more than a spell-checker or a content filter. A useful solution must:</p>
+  <ul>
+    <li>review content before it goes live, against approved guidelines, facts and assets;</li>
+    <li>detect issues in tone, terminology, messaging, visual consistency, accessibility and unsupported claims;</li>
+    <li>explain every issue, cite the guideline or source behind it, and suggest a correction that keeps the creator's purpose instead of simply rejecting the work;</li>
+    <li>support collaboration through comments, approvals, revision history and role-based review;</li>
+    <li>reveal recurring mistakes and unclear guidelines over time;</li>
+    <li>balance automation with human control, while protecting confidential material and being transparent about AI use.</li>
+  </ul>
+
+  <h3>Root causes &amp; the gap we address</h3>
+  <ul>
+    <li><strong>No shared source of truth:</strong> Guidelines sit in scattered PDFs, emails and people's heads.</li>
+    <li><strong>Outdated information:</strong> Old specifications, prices and logos keep circulating, especially with external agencies.</li>
+    <li><strong>AI tools that do not know the company:</strong> Generic LLMs write fluent text with invented claims because they cannot verify what the company has approved.</li>
+    <li><strong>Manual review does not scale:</strong> A few brand managers cannot inspect every post, so checks become slow, inconsistent or skipped.</li>
+    <li><strong>No feedback loop:</strong> Mistakes are fixed one by one; nobody asks whether the guideline behind a repeated mistake is itself unclear.</li>
+  </ul>
 
   <div class="callout">
-    <strong>Zero-Friction Judge Evaluation:</strong> Opening the application link in an incognito window loads directly into an active workspace pre-seeded with the <strong>ABC SmartFlow Global Brand Kit v3 (14 verified rules)</strong>, a <strong>1-Click Role Switcher</strong> (Creator, Reviewer, Manager, Admin), and <strong>3 live submissions</strong> demonstrating active review (including the exact <code>BG-001</code> finding from Round 1), Step 5 Amber Escalation, and Step 8 Publish-Ready Compliance Records.
+    <strong>Our reading of the core challenge is trust.</strong> Reviewers will rely on an automated system only if each finding is grounded in an approved source, can be explained in plain language, and can always be overruled by a person.
   </div>
 
-  <h2>2. Completed Features in Round 2 (9-Step End-to-End Workflow)</h2>
+  <h2>2. Users affected by the problem</h2>
   <table>
     <thead>
       <tr>
-        <th style="width: 24%;">Workflow Step</th>
-        <th style="width: 14%;">Status</th>
-        <th>Implemented Capabilities in Working Product</th>
+        <th style="width: 24%;">User</th>
+        <th style="width: 38%;">How the problem affects them</th>
+        <th>What BrandGuard delivers in the live build</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><strong>1. Set up brand kit (Admin)</strong></td>
-        <td><span class="badge-done">COMPLETED</span></td>
-        <td>Versioned Brand Knowledge Base (<code>v1</code>, <code>v2</code>, active <code>v3</code>) storing 14 rules across Approved Facts (<code>F-12</code>, <code>F-15</code>), Expired Facts (<code>F-09</code> with <code>2026-06-30</code> expiry), Claims Policy (<code>C-4</code>, <code>C-02</code>), Terminology (<code>T-01</code>, <code>T-02</code>, <code>T-04</code>), Tone (<code>G-01</code>, <code>G-02</code>), Visual Palette (<code>V-01</code>), and Accessibility (<code>A-01</code>–<code>A-03</code>). Admins can add/update rules live.</td>
+        <td><strong>Content creators</strong> (marketers, social teams, writers)</td>
+        <td>Unsure of the latest rules; late rework; fear of publishing a mistake.</td>
+        <td>Instant inline highlights, cited rules, and 1-click intent-preserving rewrites that keep their message.</td>
       </tr>
       <tr>
-        <td><strong>2. Create content (Creator)</strong></td>
-        <td><span class="badge-done">COMPLETED</span></td>
-        <td>Multi-modal editor accepting copy, confidential <code>[[double-bracket]]</code> sections, HEX colors, client-side HTML5 Canvas image upload with dominant color extraction, image alt text, and CTA link text.</td>
+        <td><strong>External agencies and freelancers</strong></td>
+        <td>Little access to internal guidance; the most revision rounds.</td>
+        <td>Pre-screened self-check against the active Brand Kit v3.0 before submitting to internal reviewers.</td>
       </tr>
       <tr>
-        <td><strong>3. Automated review (System)</strong></td>
-        <td><span class="badge-done">COMPLETED</span></td>
-        <td>Runs confidential redaction first, followed by the Deterministic Engine, AI Judgment Layer (with automatic offline heuristic fallback), and the <strong>Evidence Validator</strong> (which verifies rule ID, owner, version, and exact source quote substring match).</td>
+        <td><strong>Managers and team leads</strong></td>
+        <td>Spend time chasing approvals and fixing repeat errors.</td>
+        <td>Live 6-stage workflow stepper, real-time Brand Score (0–100%), and cross-team compliance insights.</td>
       </tr>
       <tr>
-        <td><strong>4. Creator revision (Creator)</strong></td>
-        <td><span class="badge-done">COMPLETED</span></td>
-        <td>1-click <strong>Accept Suggested Fix</strong> (replaces text or visual metadata, saves a numbered revision <code>v2</code>, <code>v3</code>..., and computes a word-level HTML diff), Custom Fix, Manual Edit, Per-Finding Comments, and Dismiss with required written reason.</td>
+        <td><strong>Brand, legal and compliance reviewers</strong></td>
+        <td>Review everything manually; bottleneck; liability for wrong claims.</td>
+        <td>Pre-screened content, verified citations, and mandatory human escalation gate on high-risk dismissals.</td>
       </tr>
       <tr>
-        <td><strong>5. Escalation safety net (System)</strong></td>
-        <td><span class="badge-done">COMPLETED</span></td>
-        <td>Dismissing a <code>HIGH</code>-severity finding (factual contradiction or legal claim) automatically transitions the finding to <strong><code>ESCALATED</code> (Amber State)</strong> instead of clearing it.</td>
-      </tr>
-      <tr>
-        <td><strong>6. Submit for approval (Creator)</strong></td>
-        <td><span class="badge-done">COMPLETED</span></td>
-        <td>Enforced gate: enabled only when <code>0 OPEN</code> findings remain and the latest content revision has been checked.</td>
-      </tr>
-      <tr>
-        <td><strong>7. Human approval (Reviewer)</strong></td>
-        <td><span class="badge-done">COMPLETED</span></td>
-        <td>Final approval is locked while any <code>ESCALATED</code> finding remains unresolved. The Reviewer must inspect the creator's dismissal reason and choose <strong>Reviewer Override &amp; Clear</strong> or <strong>Uphold Rule &amp; Require Fix</strong> before approving, requesting changes, or rejecting.</td>
-      </tr>
-      <tr>
-        <td><strong>8. Publish-ready record (System)</strong></td>
-        <td><span class="badge-done">COMPLETED</span></td>
-        <td>Immutable compliance certificate preserving numbered versions, word-level diffs, comments, reviewer sign-off, and the AI &amp; Privacy Disclosure Log.</td>
-      </tr>
-      <tr>
-        <td><strong>9. Governance insights (Manager / Admin)</strong></td>
-        <td><span class="badge-done">COMPLETED</span></td>
-        <td>Dashboard showing Evidence Grounding Rate (<code>100%</code>), recurring violations by rule, contributor team comparison, and the <strong>Ambiguous-Guideline Detector</strong> with 1-click rule clarification.</td>
+        <td><strong>Brand owners and administrators</strong></td>
+        <td>Guidelines are scattered, outdated or ambiguous; no feedback on which rules fail.</td>
+        <td>Versioned Brand Knowledge Base (v1–v3) with live rule editor and Ambiguous-Guideline Detector.</td>
       </tr>
     </tbody>
   </table>
 
-  <h2>3. Technology Stack &amp; Implementation Architecture</h2>
+  <h2>3. Proposed solution &amp; Round 2 Build Status</h2>
+  <p>
+    BrandGuard is a pre-publication review layer. A creator submits content; BrandGuard checks it against the organisation's brand knowledge base and returns findings, each with an explanation, the rule that triggered it and a suggested fix. People stay in control: nothing is changed automatically, risky decisions need a reviewer, and every action is recorded.
+  </p>
+
+  <div class="callout-blue">
+    <strong>Where we stand in Round 2 (The Build):</strong> The complete 9-step central workflow is live and running end to end. A judge opening our public URL in an incognito window lands directly in the pre-seeded workspace with <strong>3 live submissions</strong> (including the exact <code>BG-001</code> SmartFlow launch post from Round 1), a <strong>1-click Role Switcher</strong> (Creator, Reviewer, Manager, Admin), an <strong>Apple-inspired HIG Studio UI</strong>, and a <strong>27-step interactive guided tour</strong> accessible from the floating <code>?</code> helper button.
+  </div>
+
+  <h3>Six design principles (all active in Round 2)</h3>
   <ul>
-    <li><strong>Backend API:</strong> Python 3.12 with <strong>FastAPI</strong>, <strong>Pydantic v2</strong>, and <strong>Uvicorn</strong>, organized into modular routers (<code>auth_routes.py</code>, <code>brand_kit.py</code>, <code>submissions.py</code>, <code>insights.py</code>) and engine modules (<code>redactor.py</code>, <code>deterministic.py</code>, <code>ai_judge.py</code>, <code>validator.py</code>, <code>diff_utils.py</code>, <code>orchestrator.py</code>).</li>
-    <li><strong>Database Layer:</strong> <strong>SQLite3</strong> with 9 normalized tables and transactional foreign-key enforcement.</li>
-    <li><strong>Deterministic Checks:</strong> Regular-expression rule tables, ISO date expiry checks, WCAG 2.1 relative luminance and contrast ratio formula, perceptual RGB color distance ($\Delta E$), and Flesch-Kincaid readability grading.</li>
-    <li><strong>AI &amp; Offline Fallback:</strong> Supports Anthropic Claude API (<code>claude-3-5-haiku-latest</code>) on redacted text with an automatic deterministic heuristic fallback for tone (<code>G-01</code>) and nuanced claims (<code>C-02</code>) when running offline or without API keys.</li>
-    <li><strong>Security &amp; Privacy:</strong> PBKDF2-HMAC-SHA256 password hashing (100,000 iterations), HMAC-SHA256 signed bearer tokens, server-side role verification, and local redaction of <code>[[confidential]]</code> spans.</li>
+    <li><strong>Evidence-grounded:</strong> No finding is shown without citing a rule ID, source document, owner, version and exact verified source quote checked by the Evidence Validator (<code>backend/engine.py</code>).</li>
+    <li><strong>Hybrid engine:</strong> Deterministic code handles exact checks (banned terms, expired facts, WCAG 2.1 contrast, alt text, CTA links, palette distance). The AI layer (Claude API with offline heuristic fallback) handles nuanced tone and unsupported claim judgment.</li>
+    <li><strong>Intent-preserving suggestions:</strong> Each suggested rewrite makes the minimal change required and explicitly states what creator intent was preserved.</li>
+    <li><strong>Human control:</strong> Creators accept, custom-edit or dismiss with a mandatory written reason. High-severity findings dismissed by a creator automatically escalate to a reviewer.</li>
+    <li><strong>Confidentiality and transparency:</strong> Text inside <code>[[double brackets]]</code> is redacted locally before any external AI call, and every run is logged with a SHA-256 payload hash in the Audit &amp; AI Trust Log.</li>
+    <li><strong>Learning loop:</strong> High dismissal rates (≥ 40%) automatically flag ambiguous guidelines in the Insights Dashboard with a 1-click rule clarification flow.</li>
   </ul>
 
-  <h2>4. Explanation of Changes Made from the Original Round 1 Proposal</h2>
+  <h3>Flagship finding verified live in Submission #1 (<code>BG-001</code>)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 24%;">Field</th>
+        <th>Live Output in BrandGuard Review Studio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Issue / severity</strong></td>
+        <td><strong>BG-001 | HIGH</strong> (Exact Fact Contradiction &amp; Unsupported Guarantee)</td>
+      </tr>
+      <tr>
+        <td><strong>Detected text</strong></td>
+        <td>"ABC SmartFlow supports 20 languages and guarantees 100% growth."</td>
+      </tr>
+      <tr>
+        <td><strong>Rule and source</strong></td>
+        <td>Fact <code>F-12</code> "Supports 5 languages" (Product Specification v3, owner: Product Team) + Claims Policy <code>C-4</code>: no unsupported guarantees.</td>
+      </tr>
+      <tr>
+        <td><strong>Why flagged</strong></td>
+        <td>The language count (20) contradicts the approved fact (5 languages), and "guarantees 100% growth" is an unsubstantiated promotional promise.</td>
+      </tr>
+      <tr>
+        <td><strong>Suggested fix</strong></td>
+        <td>"ABC SmartFlow supports 5 languages and helps businesses improve operational efficiency." <em>(Preserves: product benefit and positive launch tone)</em></td>
+      </tr>
+      <tr>
+        <td><strong>Confidence / status</strong></td>
+        <td>High (98% — exact fact mismatch) | Verified Grounding | Needs human verification</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>4. Complete product workflow (Steps 1 to 9 — Running End to End)</h2>
+  <p>
+    There are four roles: <strong>Admin</strong> (owns the brand kit and permissions), <strong>Creator</strong> (submits and revises content), <strong>Reviewer / Manager</strong> (checks findings, resolves escalations and approves), and the <strong>System</strong> itself, which runs hybrid checks and records every action.
+  </p>
+
+  <table class="workflow-grid">
+    <thead>
+      <tr>
+        <th colspan="3">BrandGuard End-to-End Content Governance Sequence (Steps 1 to 9)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Set up brand kit</strong><br/>(Admin) →</td>
+        <td><strong>2. Create content</strong><br/>(Creator) →</td>
+        <td><strong>3. Automated review</strong><br/>(System) ↓</td>
+      </tr>
+      <tr>
+        <td>↓ <strong>6. Submit for approval</strong><br/>(no open findings)</td>
+        <td class="amber-cell">← <strong>5. Escalation</strong><br/>(high severity dismissed)</td>
+        <td>← <strong>4. Creator revision</strong><br/>(accept / edit / dismiss)</td>
+      </tr>
+      <tr>
+        <td class="green-cell"><strong>7. Human approval</strong><br/>(Manager / Reviewer) →</td>
+        <td class="green-cell"><strong>8. Publish-ready record</strong><br/>(versions, diffs, SHA-256 cert) →</td>
+        <td class="green-cell"><strong>9. Governance insights</strong><br/>(Manager / Admin)</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="caption">Figure 1: End-to-end workflow. The amber step (Step 5) is the safety net that stops a dismissed high-risk finding from slipping through.</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 22%;">Step</th>
+        <th>What happens in the live Round 2 product</th>
+        <th style="width: 16%;">Who</th>
+        <th style="width: 13%;">Round 2 Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Set up brand kit</strong></td>
+        <td>Define or update guidelines, terminology, approved facts (with owner and expiry), claims, palette and accessibility rules in Brand Kit v3.0. Typing or clicking any existing Rule ID auto-fills all fields for instant editing.</td>
+        <td>Admin / Brand Owner</td>
+        <td><span class="badge-done">LIVE</span></td>
+      </tr>
+      <tr>
+        <td><strong>2. Create content</strong></td>
+        <td>Submit campaign text, visual HEX palette, image asset with client-side HTML5 Canvas color extraction, alt text and CTA anchor text. Wrap sensitive notes in <code>[[double brackets]]</code>.</td>
+        <td>Creator</td>
+        <td><span class="badge-done">LIVE</span></td>
+      </tr>
+      <tr>
+        <td><strong>3. Automated review</strong></td>
+        <td>Redacts <code>[[confidential]]</code> spans first, runs deterministic + AI/heuristic checks, and validates every finding through the Evidence Validator.</td>
+        <td>System</td>
+        <td><span class="badge-done">LIVE</span></td>
+      </tr>
+      <tr>
+        <td><strong>4. Creator revision</strong></td>
+        <td>1-click Accept Fix (or Accept All Fixes), custom rewrite, inline source edit, per-finding comment, or dismiss with a required written reason. Every revision saves a numbered snapshot (<code>v1</code>, <code>v2</code>...) with word-level diffs.</td>
+        <td>Creator</td>
+        <td><span class="badge-done">LIVE</span></td>
+      </tr>
+      <tr>
+        <td><strong>5. Escalation</strong></td>
+        <td>Dismissing a <code>HIGH</code>-severity finding (factual contradiction or legal claim) automatically transitions it to <code>ESCALATED</code> (Amber State) instead of clearing it.</td>
+        <td>System</td>
+        <td><span class="badge-done">LIVE</span></td>
+      </tr>
+      <tr>
+        <td><strong>6. Submit for approval</strong></td>
+        <td>Gate unlocks only when <code>0 OPEN</code> findings remain and the latest revision has been verified.</td>
+        <td>Creator</td>
+        <td><span class="badge-done">LIVE</span></td>
+      </tr>
+      <tr>
+        <td><strong>7. Human approval</strong></td>
+        <td>Reviewer or Manager must first resolve any <code>ESCALATED</code> findings (Override &amp; Clear vs. Uphold Rule &amp; Require Fix) before approving, requesting changes, or rejecting.</td>
+        <td>Manager / Reviewer</td>
+        <td><span class="badge-done">LIVE</span></td>
+      </tr>
+      <tr>
+        <td><strong>8. Publish-ready record</strong></td>
+        <td>Generates a tamper-evident Compliance Certificate with SHA-256 content hash, full version history, word-level diffs, comments, reviewer sign-off and AI disclosure log.</td>
+        <td>System</td>
+        <td><span class="badge-done">LIVE</span></td>
+      </tr>
+      <tr>
+        <td><strong>9. Governance insights</strong></td>
+        <td>Tracks recurring violations by rule and team, average revisions to approval, and flags rules with high dismissal rates (≥ 40%) for 1-click wording clarification.</td>
+        <td>Manager / Admin</td>
+        <td><span class="badge-done">LIVE</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>5. Main features completed in Round 2 vs. Round 3 roadmap</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 22%;">Area</th>
+        <th>Features Completed &amp; Working in Round 2</th>
+        <th style="width: 15%;">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Brand knowledge base</strong></td>
+        <td>Versioned Brand Kits (<code>v1</code>, <code>v2</code>, active <code>v3.0</code>) with 14 canonical rules across Facts, Expired Pricing, Claims, Terminology, Tone, Visual Palette and Accessibility; live rule authoring with auto-fill for existing Rule IDs.</td>
+        <td><span class="badge-done">COMPLETED</span></td>
+      </tr>
+      <tr>
+        <td><strong>Hybrid content &amp; asset review</strong></td>
+        <td>Text, HEX palette, and image asset review (client-side HTML5 Canvas dominant color extraction, WCAG 2.1 AA contrast ratio math, screen-reader alt text <code>A-02</code>, descriptive CTA anchor text <code>A-03</code>, Flesch-Kincaid reading grade <code>G-02</code>).</td>
+        <td><span class="badge-done">COMPLETED</span></td>
+      </tr>
+      <tr>
+        <td><strong>Explainable findings &amp; Evidence Validator</strong></td>
+        <td>Every finding displays quoted text, plain-language explanation, cited rule ID, source document, owner, version, exact verified source quote, severity, confidence score, and human-judgment flag.</td>
+        <td><span class="badge-done">COMPLETED</span></td>
+      </tr>
+      <tr>
+        <td><strong>Intent-preserving fixes &amp; diff history</strong></td>
+        <td>1-click accept of suggested rewrites (with preserved-intent note), batch Accept All, custom edit, dismiss with mandatory reason, and numbered revision snapshots with word-level HTML diffs.</td>
+        <td><span class="badge-done">COMPLETED</span></td>
+      </tr>
+      <tr>
+        <td><strong>Role-based workflow &amp; escalation gate</strong></td>
+        <td>Creator, Reviewer, Manager and Admin roles; Step 5 Amber Escalation on high-severity dismissals; reviewer override/uphold resolution; SHA-256 publish-ready certificate.</td>
+        <td><span class="badge-done">COMPLETED</span></td>
+      </tr>
+      <tr>
+        <td><strong>Insights dashboard &amp; learning loop</strong></td>
+        <td>Cross-team compliance breakdown, recurring violation leaderboard, dismissal-rate tracking, and Ambiguous-Guideline Detector with 1-click rule clarification into Brand Kit v3.1.</td>
+        <td><span class="badge-done">COMPLETED</span></td>
+      </tr>
+      <tr>
+        <td><strong>Trust, security &amp; guided onboarding</strong></td>
+        <td>PBKDF2 password hashing, HMAC-SHA256 bearer tokens, 1-click judge persona switcher, local <code>[[confidential]]</code> redaction before AI calls, immutable audit log, and 27-step interactive guided product tour.</td>
+        <td><span class="badge-done">COMPLETED</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>6. Technology stack &amp; system architecture</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 18%;">Layer</th>
+        <th style="width: 38%;">Technology Choice in Round 2</th>
+        <th>Why &amp; How It Works Together</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Frontend</strong></td>
+        <td>HTML5, CSS3 (Apple HIG / macOS Sequoia design system), Vanilla ES6 JavaScript SPA (<code>app.js</code>, <code>tour.js</code>)</td>
+        <td>Zero build-step fragility; instant loading; WCAG 2.1 AA high-contrast tokens; split-pane Review Studio + 27-step interactive spotlight tour.</td>
+      </tr>
+      <tr>
+        <td><strong>Backend</strong></td>
+        <td>Python 3.12 with FastAPI, Pydantic v2, Uvicorn</td>
+        <td>High-speed async REST API serving both the governance endpoints (<code>/api/*</code>) and the SPA frontend from a single unified deployment.</td>
+      </tr>
+      <tr>
+        <td><strong>Database</strong></td>
+        <td>SQLite3 with 9 normalized relational tables (<code>backend/database.py</code>)</td>
+        <td>Zero-configuration persistence for users, brand kits, rules, submissions, revisions, findings, comments, AI logs, and audit events.</td>
+      </tr>
+      <tr>
+        <td><strong>AI &amp; Fallback</strong></td>
+        <td>Anthropic Claude API (<code>claude-3-5-haiku-latest</code>) + deterministic heuristic judge fallback</td>
+        <td>Evaluates nuanced tone and claim support on redacted text; works 100% reliably offline or without paid API keys via the built-in heuristic judge.</td>
+      </tr>
+      <tr>
+        <td><strong>Deterministic Engine</strong></td>
+        <td>Regex boundary matchers, ISO expiry comparators, WCAG 2.1 luminance/contrast math, RGB Euclidean $\Delta E$, Flesch-Kincaid grade</td>
+        <td>Executes in &lt;15ms with 100% precision and zero hallucination risk for exact factual, visual, and accessibility rules.</td>
+      </tr>
+      <tr>
+        <td><strong>Security</strong></td>
+        <td>PBKDF2-HMAC-SHA256 (100k iterations), HMAC-SHA256 tokens, server-side RBAC, <code>[[confidential]]</code> redactor</td>
+        <td>Protects pre-release metrics from external AI exposure and enforces role permissions on every mutating endpoint.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="arch-table">
+    <thead>
+      <tr>
+        <th colspan="3">BrandGuard Layered System Architecture</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="3"><strong>Users:</strong> Admin | Creator | Reviewer | Manager ↓</td>
+      </tr>
+      <tr>
+        <td colspan="3"><strong>Web Frontend SPA</strong> (Split-Pane Review Studio, Annotated Canvas, Diff Viewer, Insights Dashboard, 27-Step Guided Tour) ↓</td>
+      </tr>
+      <tr class="arch-highlight">
+        <td colspan="3">FastAPI Backend: HMAC-Signed Token Auth, Role Checks, Confidential Redactor, Audit Logger ↓</td>
+      </tr>
+      <tr>
+        <td style="width: 33.33%;"><strong>Rule Engine (Deterministic)</strong><br/>terms, expiry, palette, WCAG contrast, alt text, CTA, readability</td>
+        <td style="width: 33.33%;"><strong>AI Judgment Layer</strong><br/>Claude API + offline heuristic judge; confidential text redacted</td>
+        <td style="width: 33.33%;"><strong>Evidence Validator</strong><br/>verifies rule ID, owner, version &amp; exact source quote substring</td>
+      </tr>
+      <tr class="arch-highlight">
+        <td colspan="3">↓ SQLite3 Database (rules, facts, versions, findings, decisions, AI-call log) → Governance Insights</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="caption">Figure 2: Architecture. Deterministic checks and AI judgment both pass through the Evidence Validator before any finding reaches a user.</div>
+
+  <h2>7. What changed from our original Round 1 proposal, and why</h2>
   <ol>
-    <li><strong>Added Instant Judge Role-Switcher &amp; Pre-Seeded Incognito Workspace:</strong> To ensure judges opening the link in an incognito browser are never blocked by a login screen or empty dashboard, we added a 1-click Role Switcher in the top bar (which dynamically issues real HMAC-signed tokens for Creator, Reviewer, Manager, and Admin) alongside formal PBKDF2 login.</li>
-    <li><strong>Added Client-Side HTML5 Canvas Dominant Color Extraction:</strong> For visual palette checking on uploaded images, we implemented an HTML5 Canvas pixel sampler in the frontend paired with RGB color-distance math in the backend so image palette compliance runs instantaneously without external vision API latency.</li>
+    <li><strong>Added a 1-Click Judge Role-Switcher &amp; Pre-Seeded Incognito Workspace (alongside formal login):</strong> In Round 1 we proposed standard token login. To ensure hackathon judges opening our live link in an incognito window can immediately test all 4 personas (Creator, Reviewer, Manager, Admin) without typing credentials, we added a 1-click Role Switcher in the sidebar that dynamically issues real HMAC-SHA256 tokens for each persona while keeping the formal PBKDF2 login modal available.</li>
+    <li><strong>Added an Interactive 27-Step Guided Tour &amp; Role Guide:</strong> To maximize comprehensibility for first-time visitors, we built a custom WCAG-compliant spotlight tour engine (<code>tour.js</code>) with choreographed workspace transitions and a floating <code>?</code> helper button.</li>
+    <li><strong>Client-Side HTML5 Canvas Dominant Color Extraction:</strong> Instead of requiring heavy server-side image binaries for Round 2 palette checks, we implemented client-side HTML5 Canvas pixel sampling paired with backend perceptual RGB distance math ($\Delta E$), delivering instant visual compliance checks in the browser.</li>
   </ol>
 
-  <h2>5. Three Major Improvements Committed for Round 3</h2>
+  <h2>8. Development plan &amp; Three Major Improvements for Round 3</h2>
   <table>
     <thead>
       <tr>
         <th style="width: 28%;">Round 3 Improvement</th>
-        <th>Substantial Technical Scope &amp; Deliverable</th>
+        <th>What It Is &amp; What It Changes for the User</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><strong>1. Multi-Format Document Ingestion &amp; Layout-Aware Parsing (<code>PDF</code> / <code>DOCX</code>)</strong></td>
-        <td>Build a direct file-upload pipeline using <code>pypdf</code> and <code>python-docx</code> that extracts structured headings, paragraphs, tables, embedded images, and hyperlinks from uploaded documents, attaching exact page and paragraph coordinates to every finding.</td>
+        <td><strong>Improvement 1: Multi-Format Document Ingestion &amp; Layout-Aware Parsing (<code>PDF</code> &amp; <code>DOCX</code>)</strong></td>
+        <td><strong>What it is:</strong> A server-side document ingestion pipeline using <code>pypdf</code>, <code>python-docx</code>, and <code>Pillow</code> that parses uploaded PDF brochures and Word drafts into structured sections, headings, tables, embedded images, and hyperlinks.<br/><strong>What it changes for the user:</strong> Users can drag-and-drop real marketing PDFs and DOCX files instead of pasting plain text, and every finding is anchored to its exact page number, paragraph index, or embedded asset.</td>
       </tr>
       <tr>
-        <td><strong>2. Semantic Fact &amp; Claim Retrieval via Vector Embeddings</strong></td>
-        <td>Upgrade fact and claim verification from pattern matching to semantic vector similarity so paraphrased or indirectly worded claims (e.g., <em>"converses across two dozen languages"</em>) are matched against approved Brand Kit facts (<code>F-12: Supports 5 languages</code>) with similarity confidence scores.</td>
+        <td><strong>Improvement 2: Semantic Fact &amp; Claim Retrieval via Vector Embeddings</strong></td>
+        <td><strong>What it is:</strong> A semantic retrieval layer over the Brand Knowledge Base that embeds approved facts and claims into vector space and computes cosine similarity against candidate sentences before invoking the AI judge.<br/><strong>What it changes for the user:</strong> Catches paraphrased or indirectly worded factual contradictions (e.g., <em>"converses across nearly two dozen global tongues"</em> vs. <code>F-12: Supports 5 languages</code>) that keyword or regex patterns cannot match, while displaying a semantic similarity score on each finding.</td>
       </tr>
       <tr>
-        <td><strong>3. Multimodal Vision-Model Brand Asset &amp; Logo Verification</strong></td>
-        <td>Add multimodal vision analysis for uploaded marketing graphics to verify logo clear-space rules, detect stretched or unapproved logo variants, and measure text contrast directly over photographic backgrounds.</td>
+        <td><strong>Improvement 3: Multimodal Vision-Model Brand Asset &amp; Logo Verification</strong></td>
+        <td><strong>What it is:</strong> A multimodal vision-inspection pipeline for uploaded campaign graphics and banners that checks logo clear-space ratios, detects stretched or unapproved logo variants, and measures text-over-image contrast across complex photographic backgrounds.<br/><strong>What it changes for the user:</strong> Design and social-media teams get automated visual governance on complete ad creatives—catching logo misuse and illegible text overlays before campaigns go live.</td>
       </tr>
     </tbody>
   </table>
 
-  <h2>6. Team Member Roles &amp; Contributions (Round 2 Build)</h2>
+  <h2>9. Prototype verification &amp; measured results in Round 2</h2>
   <table>
     <thead>
       <tr>
-        <th style="width: 22%;">Member</th>
-        <th style="width: 26%;">Role on Project</th>
-        <th>Part Built in Round 2</th>
+        <th style="width: 36%;">Measure</th>
+        <th style="width: 28%;">Round 1 Target</th>
+        <th>Measured Result in Round 2 Live Build</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><strong>Logeshwaran V</strong></td>
+        <td><strong>Seeded issues detected (tone, fact, terminology, claim, visual, a11y)</strong></td>
+        <td>At least 80% recall</td>
+        <td><strong>100% recall</strong> across all 9 seeded multi-category violations in Submission #1 and #2 (verified by automated <code>pytest</code> suite).</td>
+      </tr>
+      <tr>
+        <td><strong>Fact and claim findings backed by a real approved source</strong></td>
+        <td>100%</td>
+        <td><strong>100% Evidence Grounding Rate</strong> enforced by <code>validate_and_ground_findings()</code> in <code>backend/engine.py</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Confidential text leaked to external AI</strong></td>
+        <td>0 bytes leaked</td>
+        <td><strong>0 bytes leaked:</strong> 100% of <code>[[double-bracket]]</code> spans are replaced with <code>[REDACTED_CONFIDENTIAL_N]</code> prior to AI evaluation.</td>
+      </tr>
+      <tr>
+        <td><strong>Automated end-to-end test suite</strong></td>
+        <td>Core workflow coverage</td>
+        <td><strong>5/5 end-to-end integration tests passing</strong> (<code>tests/test_workflow.py</code>) covering Steps 1 through 9.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>10. Complete team details &amp; Round 2 member contributions</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 22%;">Member</th>
+        <th style="width: 24%;">Role on the Project</th>
+        <th>Part Built in Round 2 (Certificate Contribution)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Logeshwaran V</strong><br/><em>(Team Lead)</em></td>
         <td>Team Lead &amp; Product Architect</td>
-        <td>Designed the Brand Knowledge Base v3 schema, evidence-grounding rules, 9-step governance workflow gates, and system integration.</td>
+        <td>Designed the Brand Knowledge Base v3.0 rule schema, the 9-step governance workflow state machine, evidence-grounding architecture, and full-stack system integration.</td>
       </tr>
       <tr>
         <td><strong>Muthukumar A</strong></td>
         <td>Backend &amp; Hybrid AI Engineer</td>
-        <td>Built the FastAPI backend, SQLite database layer, deterministic rule engine, AI judgment fallback, Evidence Validator, and HMAC authentication.</td>
+        <td>Built the FastAPI backend, SQLite relational schema, deterministic compliance engine, Claude API + offline heuristic judge, Evidence Validator, and HMAC token authentication.</td>
       </tr>
       <tr>
         <td><strong>Mohammed Arshath</strong></td>
         <td>Frontend &amp; UX Engineer</td>
-        <td>Built the interactive review workspace, annotated content editor, word-level diff viewer, WCAG contrast/palette inspector, and insights dashboard.</td>
+        <td>Built the Apple-HIG Review Studio SPA, interactive annotated canvas, word-level diff viewer, live WCAG contrast &amp; palette studio, Governance Insights dashboard, and 27-step guided tour.</td>
       </tr>
       <tr>
         <td><strong>Poojitha V S</strong></td>
         <td>Quality, Data &amp; Security Lead</td>
-        <td>Built the confidential text redaction pipeline, AI disclosure &amp; audit logging, pre-seeded demo scenarios, and the automated pytest verification suite.</td>
+        <td>Built the confidential <code>[[double-bracket]]</code> redaction pipeline, SHA-256 tamper-evident compliance certificates, AI trust &amp; audit log, pre-seeded demo scenarios, and pytest suite.</td>
       </tr>
     </tbody>
   </table>
+
 </body>
 </html>
